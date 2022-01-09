@@ -15,9 +15,10 @@ class CreateVacanciesTable extends Migration
     {
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
-            $table->integer('company_id');
+            $table->integer('company_inn');
             $table->integer('specialist_id');
             $table->integer('skill');
+            $table->integer('status');
             $table->timestamps();
         });
     }

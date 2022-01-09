@@ -19,6 +19,7 @@ class CreateRezumesTable extends Migration
             $table->string('passport');
             $table->integer('specialist_id');
             $table->integer('skill');
+            $table->integer('status');
             $table->timestamps();
         });
     }
