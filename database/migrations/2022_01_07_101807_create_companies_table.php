@@ -22,8 +22,6 @@ class CreateCompaniesTable extends Migration
             $table->string('company_name');
             $table->string('full_name');
             $table->string('company_phone_number', 20);
-            $table->integer('specialist_id');
-            $table->integer('skill'); //talab qilingan staj
             $table->timestamps();
         });
     }

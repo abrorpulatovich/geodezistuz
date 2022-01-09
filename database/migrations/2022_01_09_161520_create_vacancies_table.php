@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkbooksTable extends Migration
+class CreateVacanciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateWorkbooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('workbooks', function (Blueprint $table) {
+        Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
-            $table->integer('rezume_id');
-            $table->string('old_company_name');
-            $table->string('position_name');
-            $table->string('from_date');
-            $table->string('to_date');
+            $table->integer('company_id');
+            $table->integer('specialist_id');
+            $table->integer('skill');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateWorkbooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workbooks');
+        Schema::dropIfExists('vacancies');
     }
 }

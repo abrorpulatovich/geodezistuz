@@ -16,15 +16,13 @@ class CreateCitizensTable extends Migration
         Schema::create('citizens', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('passport');
             $table->string('full_name');
             $table->integer('region_id');
             $table->integer('city_id');
             $table->boolean('gender');
-            $table->integer('specialist_id');
+            $table->string('specialist');
             $table->string('phone_number', 20);
             $table->string('birth_date');
-            $table->integer('skill');
             $table->timestamps();
         });
     }
