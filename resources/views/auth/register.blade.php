@@ -9,10 +9,10 @@
 
                 <div class="card-body">
                     <h3 class="text-center">Foydalanuvchini tanlang!</h3>
-                        <input type="radio" name="user_check" class="btn-check" value="citizen" id="citizen" checked="checked" autocomplete="off">
+                        <input type="radio" name="user_check" class="btn-check" value="role_citizen" id="citizen" checked="checked" autocomplete="off">
                         <label for="citizen" class="btn btn-outline-primary">Citizen</label>
 
-                        <input type="radio" name="user_check" class="btn-check" value="company" id="company" autocomplete="off">
+                        <input type="radio" name="user_check" class="btn-check" value="role_company" id="company" autocomplete="off">
                         <label for="company" class="btn btn-outline-primary">Company</label>
                     <hr>
                     <form method="POST" action="{{ route('register') }}">
@@ -29,7 +29,7 @@
                             <!-- company -->
                             <div class="col-md-4" style="display: none;" id="comp_innshow">
                                 <label for="company_inn" class="col-form-label text-md-end">{{ __('Kompaniya inn') }}</label>
-                                <input id="company_inn" type="text" class="form-control @error('company_inn') is-invalid @enderror" name="company_inn" value="{{ old('company_inn') }}" required autocomplete="company_inn" autofocus>
+                                <input id="company_inn" type="text" class="inn form-control @error('company_inn') is-invalid @enderror" name="company_inn" value="{{ old('company_inn') }}" required autocomplete="company_inn" autofocus>
                             </div>
 
                             <!-- both -->
@@ -80,7 +80,9 @@
                             <!-- both -->
                             <div class="col-md-4">
                                 <label for="city_id" class="col-form-label text-md-end">{{ __('Tuman') }}</label>
-                                <input id="city_id" type="city_id" class="form-control @error('city_id') is-invalid @enderror" name="city_id" value="{{ old('city_id') }}" required autocomplete="city_id">
+                                <select id="city_id" required class="form-control @error('city_id') is-invalid @enderror" name="city_id">
+                                    <option value="">Tumanni tanlang...</option>
+                                </select>
                             </div>
 
                             <!-- citizen -->
@@ -98,7 +100,7 @@
                             <!-- company -->
                             <div class="col-md-4" style="display: none;" id="comp_addressshow">
                                 <label for="address" class="col-form-label text-md-end">{{ __('Korxona manzili') }}</label>
-                                <input id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
                             </div>
                         </div>
 

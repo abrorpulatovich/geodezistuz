@@ -3,6 +3,8 @@ $(document).ready(function(){
 
     $('.phone').inputmask({mask:'+\\9\\9\\899 999 99 99'});
 
+    $('.inn').inputmask({mask:'999999999'});
+
     $('.birth_date').inputmask("datetime",{
      mask: "1-2-y", 
      leapday: "-02-29",
@@ -43,4 +45,17 @@ $(document).ready(function() {
          $('#comp_logoshow').hide();
       }
    });
+});
+
+$('#region_id').on('change', function () {
+
+    var region_id = $(this).find(':selected').attr('data-id');
+
+    $.ajax({
+        type: 'GET',
+        url: "/getCities/" + region_id,
+        success: function (result) {
+            $('#city_id').html(result);
+        }
+    });
 });
