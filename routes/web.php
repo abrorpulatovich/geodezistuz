@@ -11,6 +11,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RezumeController;
 use App\Http\Controllers\VacancyController;
+use App\Http\Controllers\DataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ use App\Http\Controllers\VacancyController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/getCities/{region_id}', [App\Http\Controllers\DataController::class, 'getCities'])->name('getCities');
 
 Auth::routes();
 
