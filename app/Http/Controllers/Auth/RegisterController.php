@@ -78,7 +78,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'status' => $data['status'],
             'username' => $data['username'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'password_text' => $data['password']
         ]);
 
         if($data['status'] == 1) {
