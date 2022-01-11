@@ -82,6 +82,7 @@ class RegisterController extends Controller
         ]);
 
         if($data['status'] == 1) {
+            
             $user->update(['email' => $data['email']]);
 
             $citizen = Citizen::create([
