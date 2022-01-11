@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vacancy;
+use App\Models\Company;
 use App\Http\Requests\StoreVacancyRequest;
 use App\Http\Requests\UpdateVacancyRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class VacancyController extends Controller
 {
@@ -15,9 +18,11 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        $vacancies = Vacancy::all();
+        $vacancies = Vacancy::orderByDesc('created_at')->get();
 
-        dd($vacancies);
+        return view('vacancies.index', [
+            'vacancies' => $vacancies
+        ]);
     }
 
     /**
@@ -27,7 +32,15 @@ class VacancyController extends Controller
      */
     public function create()
     {
-        //
+        $vacancy = new Vacancy();
+
+        $user_id = Auth::user()->id;
+        $company = Company::where('user_id', $user_id)->get();
+
+        return view('vacancies.create', [
+            'vacancy' => $vacancy,
+            'company' => $company
+        ]);
     }
 
     /**
@@ -38,7 +51,7 @@ class VacancyController extends Controller
      */
     public function store(StoreVacancyRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**

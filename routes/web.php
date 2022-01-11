@@ -37,6 +37,7 @@ Auth::routes();
     Route::resource('answers', AnswerController::class);
     Route::resource('questions', QuestionController::class);
     Route::resource('comments', CommentController::class);
+    Route::resource('vacancies', VacancyController::class);
     
 
 
@@ -51,8 +52,6 @@ Route::group([
     Route::resource('news', NewsController::class);
     Route::resource('resources', ResourceController::class);
     Route::resource('resumes', RezumeController::class);
-    Route::resource('vacancies', VacancyController::class);
-    
 });
 
 // company
