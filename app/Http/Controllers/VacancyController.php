@@ -15,7 +15,9 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        //
+        $vacancies = Vacancy::all();
+
+        dd($vacancies);
     }
 
     /**

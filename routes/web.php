@@ -51,6 +51,8 @@ Route::group([
     Route::resource('news', NewsController::class);
     Route::resource('resources', ResourceController::class);
     Route::resource('resumes', RezumeController::class);
+    Route::resource('vacancies', VacancyController::class);
+    
 });
 
 // company
@@ -59,14 +61,13 @@ Route::group([
     'middleware' => ['auth', 'role:company'],
 ], function() {
     Route::resource('companies', CompanyController::class);
-    Route::resource('resumes', RezumeController::class);
 });
 
-//citizen
+// citizen
 
 Route::group([
     'middleware' => ['auth', 'role:citizen'],
 ], function() {
     Route::resource('citizens', CitizenController::class);
-    Route::resource('vacancies', VacancyController::class);
+    Route::resource('rezumes', RezumeController::class);
 });
