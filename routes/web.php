@@ -37,36 +37,26 @@ Auth::routes();
     Route::resource('answers', AnswerController::class);
     Route::resource('questions', QuestionController::class);
     Route::resource('comments', CommentController::class);
-    Route::resource('vacancies', VacancyController::class);
     
 
 
 // admin
 
-Route::group([
-    'middleware' => ['auth', 'role:admin'],
-], function() {
-    Route::resource('companies', CompanyController::class);
-    Route::resource('citizens', CitizenController::class);
+
     Route::resource('instruments', InstrumentController::class);
     Route::resource('news', NewsController::class);
     Route::resource('resources', ResourceController::class);
     Route::resource('resumes', RezumeController::class);
-});
+
 
 // company
 
-Route::group([
-    'middleware' => ['auth', 'role:company'],
-], function() {
+
     Route::resource('companies', CompanyController::class);
-});
+    Route::resource('vacancies', VacancyController::class);
+    
 
 // citizen
 
-Route::group([
-    'middleware' => ['auth', 'role:citizen'],
-], function() {
     Route::resource('citizens', CitizenController::class);
     Route::resource('rezumes', RezumeController::class);
-});

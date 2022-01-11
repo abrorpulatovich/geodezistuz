@@ -31,3 +31,18 @@
 <div class="row mb-3">
 	<div class="col-md-12"><hr></div>
 </div>
+<div class="row mb-3">
+	<div class="col-md-4">
+		<label for="specialist_id" class="col-form-label text-md-end">{{ __('Mavjud vakansiyani tanlang') }}</label>
+		<select name="specialist_id" required id="specialist_id" class="form-control">
+            <option value="">Vakansiyani tanlang...</option>
+                @foreach($specialists as $specialist)
+                    <option value="{{ $specialist->id }}" data-id="{{ $specialist->id }}" >{{ $specialist->name }}</option>
+                @endforeach
+        </select>
+	</div>
+	<div class="col-md-2">
+		<label for="skill" class="col-form-label text-md-end">{{ __('Mehnat staji') }}</label>
+		<input id="skill" type="number" class="form-control" name="skill" min="0" value="{{ old('skill') ?? $vacancy->skill }}">
+	</div>
+</div>

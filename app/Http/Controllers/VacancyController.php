@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vacancy;
+use App\Models\Specialist;
 use App\Models\Company;
 use App\Http\Requests\StoreVacancyRequest;
 use App\Http\Requests\UpdateVacancyRequest;
@@ -34,12 +35,14 @@ class VacancyController extends Controller
     {
         $vacancy = new Vacancy();
 
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
         $company = Company::where('user_id', $user_id)->get();
+        $specialists = Specialist::select('id','name')->get();
 
         return view('vacancies.create', [
             'vacancy' => $vacancy,
-            'company' => $company
+            'company' => $company,
+            'specialists' => $specialists
         ]);
     }
 
