@@ -18,9 +18,9 @@ class CreateCitizensTable extends Migration
             $table->integer('user_id');
             $table->string('full_name');
             $table->integer('region_id');
-            $table->integer('city_id');
+            $table->integer('city_id')->nullable();
             $table->boolean('gender');
-            $table->string('specialist');
+            $table->string('specialist')->nullable();
             $table->string('phone_number', 20);
             $table->string('birth_date');
             $table->timestamps();

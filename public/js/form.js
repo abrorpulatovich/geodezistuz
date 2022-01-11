@@ -19,8 +19,12 @@ $(document).ready(function() {
       if ($(this).attr('id') == 'company') {
          $('#emailhide').hide();
          $('#birthhide').hide();
+         $('#birth_date').attr('required', false);
+
          $('#comp_nameshow').show();
+         $('#company_name').attr('required', true);
          $('#comp_innshow').show();
+         $('#company_inn').attr('required', true);
 
          $('#genderhide').hide();
          $('#comp_addressshow').show();
@@ -30,11 +34,17 @@ $(document).ready(function() {
          $('#comp_siteshow').show();
          $('#comp_logoshow').show();
 
+         $('#status').val('2');
+
       } else {
          $('#emailhide').show();
          $('#birthhide').show();
+         $('#birth_date').attr('required', true);
+
          $('#comp_nameshow').hide();
+         $('#company_name').attr('required', false);
          $('#comp_innshow').hide();
+         $('#company_inn').attr('required', false);
 
          $('#genderhide').show();
          $('#comp_addressshow').hide();
@@ -43,6 +53,8 @@ $(document).ready(function() {
          $('#avatarhide').show();
          $('#comp_siteshow').hide();
          $('#comp_logoshow').hide();
+
+         $('#status').val('1');
       }
    });
 });

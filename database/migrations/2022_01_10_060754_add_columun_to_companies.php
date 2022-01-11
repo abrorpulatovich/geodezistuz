@@ -14,9 +14,9 @@ class AddColumunToCompanies extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {
-            $table->string('address')->after('company_phone_number');
-            $table->string('website')->after('address');
-            $table->string('logo_path')->after('website');
+            $table->string('address')->after('company_phone_number')->nullable();
+            $table->string('website')->after('address')->nullable();
+            $table->string('logo_path')->after('website')->nullable();
         });
     }
 

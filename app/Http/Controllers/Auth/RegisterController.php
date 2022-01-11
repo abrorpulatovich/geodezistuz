@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Citizen;
+use App\Models\Company;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,9 +52,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'username' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'region_id' => ['required', 'integer'],
+            'phone_number' => ['required', 'string'],
+
+            'company_name' => ['required_if:status,2'],
+            'company_inn' => ['required_if:status,2'],
+
+            'birth_date' => ['required_if:status,1'],
+            'gender' => ['required_if:status,1'],
         ]);
     }
 
@@ -64,10 +74,57 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'status' => $data['status'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password'])
         ]);
+
+        if($data['status'] == 1) {
+            $user->update(['email' => $data['email']]);
+
+            $citizen = Citizen::create([
+                'full_name' => $data['name'],
+                'user_id' => $user->id,
+                'region_id' => $data['region_id'],
+                'city_id' => $data['city_id'],
+                'gender' => $data['gender'],
+                'specialist' => $data['specialist'],
+                'phone_number' => $data['phone_number'],
+                'birth_date' => $data['birth_date']
+            ]);
+
+            if (request()->hasFile('avatar')) {
+                $avatar = request()->file('avatar')->getClientOriginalName();
+                request()->file('avatar')->storeAs('avatars', $user->id . '/' . $avatar, '');
+                $citizen->update(['avatar' => $avatar]);
+            }
+
+        }
+
+        if($data['status'] == 2) {
+            
+            $company = Company::create([
+                'user_id' => $user->id,
+                'region_id' => $data['region_id'],
+                'city_id' => $data['city_id'],
+                'company_name' => $data['company_name'],
+                'company_inn' => $data['company_inn'],
+                'full_name' => $data['name'],
+                'company_phone_number' => $data['phone_number'],
+                'address' => $data['address'],
+                'website' => $data['web_site']
+            ]);
+
+            if (request()->hasFile('logo')) {
+                $logo = request()->file('logo')->getClientOriginalName();
+                request()->file('logo')->storeAs('logos', $user->id . '/' . $logo, '');
+                $company->update(['logo' => $logo]);
+            }
+
+        }
+
+        return $user;
     }
 }
