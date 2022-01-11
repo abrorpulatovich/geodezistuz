@@ -75,7 +75,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'name' => $data['name'],
+
             'status' => $data['status'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
@@ -84,7 +84,10 @@ class RegisterController extends Controller
 
         if($data['status'] == 1) {
             
-            $user->update(['email' => $data['email']]);
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email']
+            ]);
 
             $citizen = Citizen::create([
                 'full_name' => $data['name'],
@@ -106,6 +109,10 @@ class RegisterController extends Controller
         }
 
         if($data['status'] == 2) {
+            
+            $user->update([
+                'name' => $data['company_name']
+            ]);
             
             $company = Company::create([
                 'user_id' => $user->id,
