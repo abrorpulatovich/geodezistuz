@@ -54,7 +54,9 @@ class VacancyController extends Controller
      */
     public function store(StoreVacancyRequest $request)
     {
-        dd($request);
+        $data = $request->validated();
+
+        dd($data);
     }
 
     /**

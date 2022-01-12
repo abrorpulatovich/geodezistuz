@@ -51,10 +51,8 @@ Auth::routes();
 
 // company
 
-
     Route::resource('companies', CompanyController::class);
     Route::resource('vacancies', VacancyController::class);
-    
 
 // citizen
 
