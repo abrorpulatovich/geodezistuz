@@ -71,3 +71,41 @@ $('#region_id').on('change', function () {
         }
     });
 });
+
+$("#salary").inputmask({
+        'radixPoint': ',',
+        'alias': 'numeric',
+        'groupSeparator': ' ',
+        'autoGroup': true,
+        'digits': 0,
+        'placeholder': '',
+        'prefix': '',
+        'min': 0,
+
+});
+
+$("#salary").on("blur", function () {
+    var val = $(this).val();
+
+    while (val.indexOf(' ') !== -1) {
+        val = val.replace(' ', '');
+    }
+
+    if (val > 50000000) {
+        alert("Oylik maosh 50 mln dan kichik bo‘lishi kerak!");
+        $(this).val("");
+    }
+});
+
+$('.hide_salary').click(function () {
+    if ($('.hide_salary').is(':checked')) {
+        $('#salary_hidden').hide();
+        $('#salary').attr('required', false).val("");
+        $(this).val(1);
+    } else {
+        $('#salary_hidden').show();
+        $('#salary').attr('required', true);
+        $(this).val(0);
+    }
+});
+
