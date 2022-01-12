@@ -107,7 +107,17 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        //
+        $user_id = Auth::id();
+        $company = Company::where('user_id', $user_id)->get();
+        $specialists = Specialist::select('id','name')->get();
+        $skills = Skill::select('id','name')->get();
+
+        return view('vacancies.edit', [
+            'vacancy' => $vacancy,
+            'company' => $company,
+            'specialists' => $specialists,
+            'skills' => $skills
+        ]);
     }
 
     /**
@@ -119,7 +129,17 @@ class VacancyController extends Controller
      */
     public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
     {
-        //
+        $vacancy->company_inn = $request->company_inn;
+        $vacancy->specialist_id = $request->specialist_id;
+        $vacancy->skill = $request->skill;
+        $vacancy->salary_hidden = $request->is_salary ?? 0;
+        $vacancy->salary = $request->salary;
+        $vacancy->is_published = 0;
+        $vacancy->is_active = 1;
+        $vacancy->status = 1; //holati yangi
+        $vacancy->update();
+
+        return redirect()->route('vacancies.index');
     }
 
     /**
@@ -130,6 +150,8 @@ class VacancyController extends Controller
      */
     public function destroy(Vacancy $vacancy)
     {
-        //
+        $vacancy->delete();
+
+        return redirect()->route('vacancies.index');
     }
 }

@@ -9,6 +9,16 @@
 						<div class="mb-3">
 							  <a href="	{{ route('vacancies.index') }}"><button class="btn btn-primary" type="button">Orqaga <i class="bi bi-box-arrow-in-left"></i></button></a>
 						 </div>
+						 <div class="mb-3 btn-group">
+						 	@if(Auth::user()->status == 2)
+						 		<a type="button" href="{{ route('vacancies.edit', ['vacancy' => $vacancy->id]) }}" class="btn btn-success"><i class="bi bi-pencil"></i> Tahrirlash</a>
+						 		<form action="{{ route('vacancies.destroy', ['vacancy' => $vacancy->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i>O‘chirish</button>
+                                </form>
+						  	@endif
+						 </div>
 						<table class="table table-bordered">
 							<tr>
 								<td>Vakansiya bergan tashkilot</td>

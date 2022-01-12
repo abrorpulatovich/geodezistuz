@@ -30,6 +30,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if(count($vacancies) > 0)
+
                                     @foreach($vacancies as $vacancy)
                                         <tr>
                                             <td>{{ ($vacancies->currentpage()-1)*$vacancies->perpage() + $loop->index+1 }}</td>
@@ -55,10 +57,23 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('vacancies.show', ['vacancy' => $vacancy->id]) }}"><i class="bi bi-eye"></i></a>
+                                                <div class="btn-group">
+                                                        <a href="{{ route('vacancies.show', ['vacancy' => $vacancy->id]) }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
+                                                    @if(Auth::user()->status == 2)
+                                                        <a href="{{ route('vacancies.edit', ['vacancy' => $vacancy->id]) }}" class="btn btn-success" style="margin-left:4px"><i class="bi bi-pencil"></i></a>
+                                                        <form action="{{ route('vacancies.destroy', ['vacancy' => $vacancy->id]) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="margin-left:4px;" class="btn btn-danger" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i></button>
+                                                        </form>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <span class="text-center fst-italic">Ma‘lumot yo‘q</span>
+                                @endif
                                 </tbody>
                             </table>
                             {{ $vacancies->links() }}
