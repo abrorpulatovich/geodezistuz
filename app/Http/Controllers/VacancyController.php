@@ -26,7 +26,7 @@ class VacancyController extends Controller
         { 
             $company = Company::where('user_id', $user->id)->get();
             $company_inn = $company[0]->company_inn;
-            
+
             $vacancies = Vacancy::where('company_inn', $company_inn)->orderByDesc('created_at')->paginate(20);
         }
         if($user->status == 0)
@@ -90,9 +90,13 @@ class VacancyController extends Controller
      * @param  \App\Models\Vacancy  $vacancy
      * @return \Illuminate\Http\Response
      */
-    public function show(Vacancy $vacancy)
+    public function show($vacancy)
     {
-        //
+        $vacancy = Vacancy::findOrFail($vacancy);
+
+        return view('vacancies.show', [
+            'vacancy' => $vacancy
+        ]);
     }
 
     /**

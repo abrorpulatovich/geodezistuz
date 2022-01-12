@@ -24,7 +24,9 @@
                                         <th>Mavjud vakansiya</th>
                                         <th>Mehnat staji</th>
                                         <th>Oylik</th>
+                                        <th>Qo‘shilgan sana</th>
                                         <th>Holati</th>
+                                        <th>Amallar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,12 +46,16 @@
                                                     {{ $vacancy->salary }} so‘m
                                                 @endif
                                             </td>
+                                            <td>{{ date("d.m.Y", strtotime($vacancy->created_at)) }}</td>
                                             <td>
                                                 @if($vacancy->status == 1)
                                                     Yangi 
                                                 @elseif($vacancy->status == 2)
                                                     Tasdiqlangan
                                                 @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('vacancies.show', ['vacancy' => $vacancy->id]) }}"><i class="bi bi-eye"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
