@@ -45,9 +45,13 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show($company)
     {
-        //
+        $company = Company::findOrFail($company);
+
+        return view('companies.show', [
+            'company' => $company
+        ]);
     }
 
     /**

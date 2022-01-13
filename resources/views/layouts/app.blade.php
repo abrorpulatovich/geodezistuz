@@ -66,12 +66,17 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <i class="bi bi-box-arrow-right"></i> {{ __('Tizimdan chiqish') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    @if(Auth::user()->status == 2)
+                                        <a class="dropdown-item" href="#"><i class="bi bi-eye"></i> {{ __('Korxona ma‘lumotlari') }}</a>
+                                    @elseif(Auth::user()->status == 1)
+                                        <a class="dropdown-item" href=""><i class="bi bi-eye"></i> {{ __('Mening ma‘lumotlarim') }}</a>
+                                    @endif
                                 </div>
                             </li>
                         @endguest
