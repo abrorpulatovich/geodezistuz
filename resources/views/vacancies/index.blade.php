@@ -8,8 +8,11 @@
                     <div class="card-header">{{ __('Vakansiyalar ro‘yhati') }}</div>
                     <div class="card-body">
                         @if(Auth::user()->status == 2) 
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end">
+                            @if($company_status == 2)
                                 <a href="{{ route('vacancies.create') }}"><button class="btn btn-success" type="button"><i class="bi bi-plus-lg"></i> Vakansiya qo‘shish</button></a>
+                            @endif                                
+                                <a href="{{ route('companies.show', ['company' => $company_id]) }}"><button class="btn btn-info" type="button"><i class="bi bi-info-circle"></i> Korxona ma‘lumotlari</button></a>
                             </div>
                         @endif
                         <br>
@@ -50,9 +53,9 @@
                                             </td>
                                             <td>{{ date("d.m.Y", strtotime($vacancy->created_at)) }}</td>
                                             <td>
-                                                @if($vacancy->status == 1)
-                                                    Yangi 
-                                                @elseif($vacancy->status == 2)
+                                                @if($vacancy->is_published == 0)
+                                                    Tasdiqlanmagan 
+                                                @elseif($vacancy->is_published == 1)
                                                     Tasdiqlangan
                                                 @endif
                                             </td>
@@ -61,12 +64,12 @@
                                                         <a href="{{ route('vacancies.show', ['vacancy' => $vacancy->id]) }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
                                                     @if(Auth::user()->status == 2)
                                                         <a href="{{ route('vacancies.edit', ['vacancy' => $vacancy->id]) }}" class="btn btn-success" style="margin-left:4px"><i class="bi bi-pencil"></i></a>
+                                                    @endif
                                                         <form action="{{ route('vacancies.destroy', ['vacancy' => $vacancy->id]) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" style="margin-left:4px;" class="btn btn-danger" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i></button>
                                                         </form>
-                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

@@ -12,6 +12,7 @@ use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\RezumeController;
 use App\Http\Controllers\VacancyController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\ModeratorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,9 @@ Auth::routes();
     Route::resource('questions', QuestionController::class);
     Route::resource('comments', CommentController::class);
     
+// moderator
+    Route::post('company/{id}', [App\Http\Controllers\ModeratorController::class, 'companyCheck'])->name('companies.check');
+    Route::post('vacancy/{id}', [App\Http\Controllers\ModeratorController::class, 'vacancyCheck'])->name('vacancies.check');
 
 
 // admin

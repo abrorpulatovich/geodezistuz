@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Region;
+use App\Models\City;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 
@@ -15,7 +17,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::orderByDesc('created_at')->paginate(20);
+
+         return view('companies.index', [
+            'companies' => $companies,
+        ]);
     }
 
     /**
@@ -62,7 +68,15 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+
+        $regions = Region::select('id','name_uz')->get();
+        $cities = City::select('id','name_uz')->get();
+
+        return view('companies.edit', [
+            'company' => $company,
+            'regions' => $regions,
+            'cities' => $cities
+        ]);
     }
 
     /**
@@ -74,7 +88,17 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, Company $company)
     {
-        //
+        $company->company_name = $request->company_name;
+        $company->status = 1;
+        $company->company_inn = $request->company_inn;
+        $company->region_id = $request->region_id;
+        $company->city_id = $request->city_id;
+        $company->full_name = $request->name;
+        $company->address = $request->address;
+        $company->website = $request->website;
+        $company->update();
+
+        return redirect()->route('vacancies.index');
     }
 
     /**
@@ -85,6 +109,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+
+        return redirect()->route('companies.index');
     }
 }

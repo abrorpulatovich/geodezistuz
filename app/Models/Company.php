@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'full_name',
@@ -18,6 +20,17 @@ class Company extends Model
         'company_name',
         'company_phone_number',
         'address',
-        'website'
+        'website',
+        'status'
     ];
+
+    public static function regionName($id)
+    {    
+        return Region::where('id',$id)->first();   
+    }
+
+    public static function cityName($id)
+    {    
+        return City::where('id',$id)->first();   
+    }
 }

@@ -7,17 +7,17 @@
                     <div class="card-header">{{ __('Vakansiya haqida ma‘lumot') }}</div>
                     <div class="card-body">
 						<div class="mb-3">
-							  <a href="	{{ route('vacancies.index') }}"><button class="btn btn-primary" type="button">Orqaga <i class="bi bi-box-arrow-in-left"></i></button></a>
+							  <a href="	{{ url()->previous() }}"><button class="btn btn-primary" type="button">Orqaga <i class="bi bi-box-arrow-in-left"></i></button></a>
 						 </div>
 						 <div class="mb-3 btn-group">
-						 	@if(Auth::user()->status == 2)
+						 	@if(Auth::user()->status == 2 && $vacancy->is_published == 0)
 						 		<a type="button" href="{{ route('vacancies.edit', ['vacancy' => $vacancy->id]) }}" class="btn btn-success"><i class="bi bi-pencil"></i> Tahrirlash</a>
+						  	@endif
 						 		<form action="{{ route('vacancies.destroy', ['vacancy' => $vacancy->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i>O‘chirish</button>
+                                    <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i> O‘chirish</button>
                                 </form>
-						  	@endif
 						 </div>
 						<table class="table table-bordered">
 							<tr>
@@ -58,8 +58,18 @@
 								<td>Holati</td>
 								<td>
 									@if($vacancy->status == 1)
-                                        Yangi 
+                                        Korilmagan 
                                     @elseif($vacancy->status == 2)
+                                        Korilgan
+                                    @endif
+								</td>
+							</tr>
+							<tr>
+								<td>Holati</td>
+								<td>
+									@if($vacancy->is_published == 0)
+                                        Tasdiqlanmagan 
+                                    @elseif($vacancy->is_published == 1)
                                         Tasdiqlangan
                                     @endif
 								</td>
@@ -69,6 +79,19 @@
 								<td>{{ $vacancy->created_at }}</td>
 							</tr>
 						</table>
+						@if(Auth::user()->status == 3)
+							@if($vacancy->is_published == 0 || $vacancy->is_published == 2)
+								<form action="{{ route('vacancies.check', ['id' => $vacancy->id]) }}" method="POST">
+	                                @csrf
+	                                <button type="submit" style="margin-left:4px;" class="btn btn-success "onclick="return confirm('Haqiqatdan ham ushbu vakansiyani tasdiqlaysizmi?')"><i class="bi bi-check-circle"></i> Tasdiqlash</button>
+	                            </form>
+	                        @elseif($vacancy->is_published == 1)
+	                        	<form action="{{ route('vacancies.check', ['id' => $vacancy->id]) }}" method="POST">
+	                                @csrf
+	                                <button type="submit" style="margin-left:4px;" class="btn btn-danger "onclick="return confirm('Haqiqatdan ham ushbu vakansiyani bloklaysizmi?')"><i class="bi bi-x-circle"></i> Bloklash</button>
+	                            </form>
+	                        @endif
+						@endif
 					</div>
 				</div>
 			</div>

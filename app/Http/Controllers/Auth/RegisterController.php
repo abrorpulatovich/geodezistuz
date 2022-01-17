@@ -52,16 +52,18 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'region_id' => ['required', 'integer'],
             'phone_number' => ['required', 'string'],
 
             'company_name' => ['required_if:status,2'],
-            'company_inn' => ['required_if:status,2'],
+            'director_name' => ['required_if:status,2'],
+            'company_inn' => ['required_if:status,2', 'unique:companies'],
 
             'birth_date' => ['required_if:status,1'],
+            'name' => ['required_if:status,1'],
             'gender' => ['required_if:status,1'],
         ]);
     }
@@ -120,10 +122,11 @@ class RegisterController extends Controller
                 'city_id' => $data['city_id'],
                 'company_name' => $data['company_name'],
                 'company_inn' => $data['company_inn'],
-                'full_name' => $data['name'],
+                'full_name' => $data['director_name'],
                 'company_phone_number' => $data['phone_number'],
                 'address' => $data['address'],
-                'website' => $data['web_site']
+                'website' => $data['web_site'],
+                'status' => 1
             ]);
 
             if (request()->hasFile('logo')) {

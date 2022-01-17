@@ -37,7 +37,7 @@
 		<select name="specialist_id" required id="specialist_id" class="form-control">
             <option value="">Vakansiyani tanlang...</option>
                 @foreach($specialists as $specialist)
-                    @if($vacancy->specialist_id == $specialist->id))
+                    @if($vacancy->specialist_id == $specialist->id)
                     	<option value="{{ $specialist->id }}" selected="selected" data-id="{{ $specialist->id }}">{{ $specialist->name }}</option>
                     @endif
                     <option value="{{ $specialist->id }}" data-id="{{ $specialist->id }}" >{{ $specialist->name }}</option>
@@ -49,7 +49,7 @@
 		<select name="skill" required id="skill" class="form-control">
             <option value="">Mehnat stajini tanlang...</option>
                 @foreach($skills as $skill)
-                    @if($vacancy->skill == $skill->id))
+                    @if($vacancy->skill == $skill->id)
                     	<option value="{{ $skill->id }}" selected="selected" data-id="{{ $skill->id }}">{{ $skill->name }}</option>
                     @endif
                     	<option value="{{ $skill->id }}" data-id="{{ $skill->id }}">{{ $skill->name }}</option>

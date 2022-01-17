@@ -38,7 +38,14 @@ class RoleSeeder extends Seeder
                     'guard_name' => 'web',
                     'created_at' => now(),
                     'updated_at' => now(),
-                ]
+                ],
+                [
+                    'id' => 4,
+                    'name' => 'moderator',
+                    'guard_name' => 'web',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
             ];
             DB::table('roles')->insert($roles);
 
@@ -57,6 +64,11 @@ class RoleSeeder extends Seeder
                     'role_id' => 3,
                     'model_type' => 'App\Model\User',
                     'model_id' => 3
+                ],
+                [
+                    'role_id' => 4,
+                    'model_type' => 'App\Model\User',
+                    'model_id' => 4
                 ]
 
             ];

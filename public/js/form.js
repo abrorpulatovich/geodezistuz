@@ -18,10 +18,13 @@ $(document).ready(function() {
    $('input[type="radio"]').click(function() {
       if ($(this).attr('id') == 'company') {
          $('#emailhide').hide();
+         $('#full_namehide').hide();
          $('#birthhide').hide();
          $('#birth_date').attr('required', false);
 
          $('#comp_nameshow').show();
+         $('#comp_directorshow').show();
+         $('#director_name').attr('required', true);
          $('#company_name').attr('required', true);
          $('#comp_innshow').show();
          $('#company_inn').attr('required', true);
@@ -40,9 +43,13 @@ $(document).ready(function() {
          $('#emailhide').show();
          $('#birthhide').show();
          $('#birth_date').attr('required', true);
+         $('#full_namehide').show();
+         $('#name').attr('required', true);
 
          $('#comp_nameshow').hide();
+         $('#comp_directorshow').hide();
          $('#company_name').attr('required', false);
+         $('#director_name').attr('required', false);
          $('#comp_innshow').hide();
          $('#company_inn').attr('required', false);
 

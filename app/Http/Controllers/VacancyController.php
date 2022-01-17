@@ -25,19 +25,27 @@ class VacancyController extends Controller
         if($user->status == 2)
         { 
             $company = Company::where('user_id', $user->id)->get();
+            $company_id = $company[0]->id;
+            $company_status = $company[0]->status;
             $company_inn = $company[0]->company_inn;
 
             $vacancies = Vacancy::where('company_inn', $company_inn)->orderByDesc('created_at')->paginate(20);
+
+            return view('vacancies.index', [
+                'vacancies' => $vacancies,
+                'company_id' => $company_id,
+                'company_status' => $company_status
+            ]);
         }
-        if($user->status == 0)
+
+        if($user->status == 0 || $user->status == 3)
         {
             $vacancies = Vacancy::orderByDesc('created_at')->paginate(20);
+
+            return view('vacancies.index', [
+                'vacancies' => $vacancies
+            ]);
         }
-
-
-        return view('vacancies.index', [
-            'vacancies' => $vacancies
-        ]);
     }
 
     /**

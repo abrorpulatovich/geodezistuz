@@ -36,14 +36,5 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::useBootstrap();
-
-        $user_id = Auth::user();
-        $company = Company::where('user_id', $user_id)->get();
-        dd($user_id);
-        $this->company = $company;
-
-        view()->composer('layouts.app', function($view) {
-            $view->with(['company' => $this->company]);
-        });
     }
 }
