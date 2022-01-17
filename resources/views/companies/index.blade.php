@@ -33,11 +33,11 @@
                                             <td>{{ date("d.m.Y", strtotime($company->created_at)) }}</td>
                                             <td>
                                                 @if($company->status == 1)
-                                                    Yangi
+                                                    <span class="badge bg-warning text-wrap">Yangi</span>
                                                 @elseif($company->status == 2)
-                                                    Tasdiqlangan
+                                                    <span class="badge bg-success text-wrap">Tasdiqlangan</span>
                                                 @elseif($company->status == 3)
-                                                    Vaqtinchalik bloklangan
+                                                    <span class="badge bg-danger text-wrap">Bloklangan</span>
                                                 @endif
                                             </td>
                                             <td>

@@ -54,9 +54,9 @@
                                             <td>{{ date("d.m.Y", strtotime($vacancy->created_at)) }}</td>
                                             <td>
                                                 @if($vacancy->is_published == 0)
-                                                    Tasdiqlanmagan 
+                                                    <span class="badge bg-danger text-wrap">Tasdiqlanmagan</span> 
                                                 @elseif($vacancy->is_published == 1)
-                                                    Tasdiqlangan
+                                                    <span class="badge bg-success text-wrap">Tasdiqlangan</span>
                                                 @endif
                                             </td>
                                             <td>
