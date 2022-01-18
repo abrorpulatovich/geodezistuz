@@ -30,11 +30,12 @@
                         @endif
 
                         @if(Auth::user()->status != 2)
-                            <a href="" class="text-sm text-gray-700 dark:text-gray-500 underline">Rezume</a>
+                            <a href="{{ route('rezumes.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Rezume</a>
                         @endif
 
                         @if(Auth::user()->status == 0 || Auth::user()->status == 3)
                             <a href="{{ route('companies.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Korxonalar</a>
+                            <a href="{{ route('citizens.index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Fuqarolar</a>
                         @endif
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else

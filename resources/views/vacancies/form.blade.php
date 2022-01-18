@@ -54,7 +54,7 @@
 <div class="row mb-3">
 	<div class="col-md-3" id="salary_hidden">
 		<label for="salary" class="col-form-label text-md-end">{{ __('Oylik maosh (so‘m)') }}</label>
-		<input id="salary" type="text" class="form-control" name="salary" value="{{ old('salary') ?? $vacancy->salary }}" required="required">
+		<input id="salary" type="text" class="salary form-control" name="salary" value="{{ old('salary') ?? $vacancy->salary }}" required="required">
 	</div>
 	<div class="col-md-3 mt-4">
 		<label class="col-form-label text-md-end">

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRezumesTable extends Migration
+class AddColumnsToRezumesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateRezumesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rezumes', function (Blueprint $table) {
-            $table->id();
-            $table->string('passport');
-            $table->integer('specialist_id');
-            $table->integer('skill');
-            $table->integer('status');
-            $table->timestamps();
+        Schema::table('rezumes', function (Blueprint $table) {
+            $table->boolean('is_history')->after('salary_hidden');
         });
     }
 
@@ -30,6 +25,8 @@ class CreateRezumesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rezumes');
+        Schema::table('rezumes', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -12,15 +12,19 @@ $(document).ready(function(){
      separator: "-", 
      alias: "dd-mm-yyyy"
     });
+
+    $('.passport').inputmask({mask:'[AA] 9999999'});
 });
 
 $(document).ready(function() {
    $('input[type="radio"]').click(function() {
       if ($(this).attr('id') == 'company') {
          $('#emailhide').hide();
+         $('#passport_hide').hide();
          $('#full_namehide').hide();
          $('#birthhide').hide();
          $('#birth_date').attr('required', false);
+         $('#passport').attr('required', false);
 
          $('#comp_nameshow').show();
          $('#comp_directorshow').show();
@@ -41,10 +45,12 @@ $(document).ready(function() {
 
       } else {
          $('#emailhide').show();
+         $('#passport_hide').show();
          $('#birthhide').show();
          $('#birth_date').attr('required', true);
          $('#full_namehide').show();
          $('#name').attr('required', true);
+         $('#passport').attr('required', true);
 
          $('#comp_nameshow').hide();
          $('#comp_directorshow').hide();
@@ -114,5 +120,54 @@ $('.hide_salary').click(function () {
         $('#salary').attr('required', true);
         $(this).val(0);
     }
+});
+
+$('#is_history').click(function () {
+    if ($('#is_history').is(':checked')) {
+        $('#hide_history').hide();
+        $('#old_company_name').attr('required', false).val("");
+        $('#position_name').attr('required', false).val("");
+        $('#from_date').attr('required', false).val("");
+        $('#to_date').attr('required', false).val("");
+        $(this).val(1);
+    } else {
+        $('#hide_history').show();
+        $('#old_company_name').attr('required', true);
+        $('#position_name').attr('required', true);
+        $('#from_date').attr('required', true);
+        $('#to_date').attr('required', true);
+        $(this).val(0);
+    }
+});
+
+// dinamic form
+
+$('#plus_btn').on('click', function(){
+    addRow();
+});
+
+function addRow(){
+    var tr = '<tr>'+
+                    '<td>'+
+                        '<input id="old_company_name" type="text" class="old_company_name form-control" name="old_company_name[]" value="" required="required">'+
+                    '</td>'+
+                    '<td>'+
+                        '<input id="position_name" type="text" class="position_name form-control" name="position_name[]" value="" required="required">'+
+                    '</td>'+
+                    '<td>'+
+                        '<input id="from_date" type="text" class="birth_date from_date form-control" name="from_date[]" value="" required="required">'+
+                    '</td>'+
+                    '<td>'+
+                        '<input id="to_date" type="text" class="birth_date to_date form-control" name="to_date[]" value="" required="required">'+
+                    '</td>'+
+                    '<td>'+
+                        '<button type="button" class="btn btn-danger" style="margin-left:4px" id="minus_btn">O‘chirish</button>'+
+                    '</td>'+
+                '</tr>';
+        $('tbody').append(tr);
+}
+
+$('tbody').on('click', '#minus_btn', function(){
+    $(this).parent().parent().remove();
 });
 

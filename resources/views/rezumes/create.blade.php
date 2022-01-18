@@ -3,13 +3,13 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
-            	<div class="card-header">{{ __('Vakasiya qo‘shish') }}</div>
+            	<div class="card-header">{{ __('Rezume qo‘shish') }}</div>
             	<div class="card-body">
-				<form method="post" action="{{ route('vacancies.store') }}">
+				<form method="post" action="{{ route('rezumes.store') }}">
 				  @csrf
-				  @include('vacancies.form')
+				  @include('rezumes.form')
 				 
 				  <button type="submit" class="btn btn-success">Saqlash</button>
 				</form>

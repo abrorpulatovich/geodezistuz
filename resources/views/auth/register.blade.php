@@ -28,6 +28,12 @@
                         @csrf
 
                         <div class="row mb-3">
+                            <div class="col-md-4" id="passport_hide">
+                                <label for="passport" class="col-form-label text-md-end">{{ __('Passport seriya') }} <span style="color: red;">*</span></label>
+                                <input id="passport" type="text" class="passport form-control @error('passport') is-invalid @enderror" name="passport" value="{{ old('passport') }}" autocomplete="passport" autofocus required="required">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <!-- status -->
                             <div style="display: none;">
                                 <input type="number" name="status" id="status" value="1">
@@ -84,7 +90,7 @@
 
                             <!-- citizen -->
                             <div class="col-md-3" id="birthhide">
-                                <label for="birth_date" class="col-form-label text-md-end">{{ __('Tug‘ilgan yili') }} <span style="color: red;">*</span></label>
+                                <label for="birth_date" class="col-form-label text-md-end">{{ __('Tug‘ilgan sana') }} <span style="color: red;">*</span></label>
 
                                 <input id="birth_date" type="text" class="birth_date form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" autocomplete="birth_date" required="required">
                             </div>                            
@@ -192,7 +198,7 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     {{ __('Ro‘yxatdan o‘tish') }}
                                 </button>
                             </div>

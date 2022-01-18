@@ -8,4 +8,34 @@ use Illuminate\Database\Eloquent\Model;
 class Rezume extends Model
 {
     use HasFactory;
+
+     protected $fillable = [
+        'passport',
+        'specialist_id',
+        'skill',
+        'is_published',
+        'is_active',
+        'status',
+        'salary_hidden',
+        'is_history'
+    ];
+
+
+    public static function regionName($id)
+    {    
+        return Region::where('id',$id)->first();   
+    }
+
+    public static function citizen($passport)
+    {    
+        return Citizen::where('passport',$passport)->first();   
+    }
+    public static function specialist($id)
+    {    
+        return Specialist::where('id',$id)->first();   
+    }
+    public static function skill($id)
+    {    
+        return Skill::where('id',$id)->first();   
+    }
 }

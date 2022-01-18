@@ -42,6 +42,7 @@ Auth::routes();
 // moderator
     Route::post('company/{id}', [App\Http\Controllers\ModeratorController::class, 'companyCheck'])->name('companies.check');
     Route::post('vacancy/{id}', [App\Http\Controllers\ModeratorController::class, 'vacancyCheck'])->name('vacancies.check');
+    Route::post('citizen/{id}', [App\Http\Controllers\ModeratorController::class, 'citizenCheck'])->name('citizens.check');
 
 
 // admin

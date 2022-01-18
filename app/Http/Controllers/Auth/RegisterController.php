@@ -61,7 +61,8 @@ class RegisterController extends Controller
             'company_name' => ['required_if:status,2'],
             'director_name' => ['required_if:status,2'],
             'company_inn' => ['required_if:status,2', 'unique:companies'],
-
+            
+            'passport' => ['required_if:status,1', 'unique:citizens'],
             'birth_date' => ['required_if:status,1'],
             'name' => ['required_if:status,1'],
             'gender' => ['required_if:status,1'],
@@ -91,6 +92,8 @@ class RegisterController extends Controller
                 'email' => $data['email']
             ]);
 
+            $passport = substr($data['passport'],0,2).substr($data['passport'],3,7);
+
             $citizen = Citizen::create([
                 'full_name' => $data['name'],
                 'user_id' => $user->id,
@@ -99,7 +102,9 @@ class RegisterController extends Controller
                 'gender' => $data['gender'],
                 'specialist' => $data['specialist'],
                 'phone_number' => $data['phone_number'],
-                'birth_date' => $data['birth_date']
+                'birth_date' => $data['birth_date'],
+                'status' => 1,
+                'passport' => $passport
             ]);
 
             if (request()->hasFile('avatar')) {

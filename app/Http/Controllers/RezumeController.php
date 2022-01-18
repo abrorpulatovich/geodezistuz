@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rezume;
+use App\Models\Citizen;
+use App\Models\Workbook;
+use App\Models\Specialist;
+use App\Models\Skill;
 use App\Http\Requests\StoreRezumeRequest;
 use App\Http\Requests\UpdateRezumeRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class RezumeController extends Controller
 {
@@ -15,7 +21,32 @@ class RezumeController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        if($user->status == 1)
+        { 
+            $citizen = Citizen::where('user_id', $user->id)->get();
+            $citizen_id = $citizen[0]->id;
+            $citizen_status = $citizen[0]->status;
+            $passport = $citizen[0]->passport;
+
+            $rezumes = Rezume::where('passport', $passport)->orderByDesc('created_at')->paginate(20);
+
+            return view('rezumes.index', [
+                'rezumes' => $rezumes,
+                'citizen_id' => $citizen_id,
+                'citizen_status' => $citizen_status
+            ]);
+        }
+
+        if($user->status == 0 || $user->status == 3)
+        {
+            $rezumes = Rezume::orderByDesc('created_at')->paginate(20);
+
+            return view('rezumes.index', [
+                'rezumes' => $rezumes
+            ]);
+        }
     }
 
     /**
@@ -25,7 +56,21 @@ class RezumeController extends Controller
      */
     public function create()
     {
-        //
+        $rezume = new Rezume();
+        $workbook = new Workbook();
+
+        $user_id = Auth::id();
+        $citizen = Citizen::where('user_id', $user_id)->get();
+        $specialists = Specialist::select('id','name')->get();
+        $skills = Skill::select('id','name')->get();
+
+        return view('rezumes.create', [
+            'rezume' => $rezume,
+            'workbook' => $workbook,
+            'citizen' => $citizen,
+            'specialists' => $specialists,
+            'skills' => $skills
+        ]);
     }
 
     /**
@@ -36,7 +81,7 @@ class RezumeController extends Controller
      */
     public function store(StoreRezumeRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**

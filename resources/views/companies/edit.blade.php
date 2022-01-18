@@ -15,7 +15,7 @@
 				  @csrf
 				  @include('companies.form')
 				 
-				  <button type="submit" class="btn btn-primary">Saqlash</button>
+				  <button type="submit" class="btn btn-success">Saqlash</button>
 				</form>
 			</div>
 			</div>

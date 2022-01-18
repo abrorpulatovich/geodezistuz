@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Citizen;
+use App\Models\Region;
+use App\Models\City;
 use App\Http\Requests\StoreCitizenRequest;
 use App\Http\Requests\UpdateCitizenRequest;
 
@@ -15,7 +17,11 @@ class CitizenController extends Controller
      */
     public function index()
     {
-        //
+        $citizens = Citizen::orderByDesc('created_at')->paginate(20);
+
+         return view('citizens.index', [
+            'citizens' => $citizens,
+        ]);
     }
 
     /**
@@ -45,9 +51,13 @@ class CitizenController extends Controller
      * @param  \App\Models\Citizen  $citizen
      * @return \Illuminate\Http\Response
      */
-    public function show(Citizen $citizen)
+    public function show($citizen)
     {
-        //
+        $citizen = Citizen::findOrFail($citizen);
+
+        return view('citizens.show', [
+            'citizen' => $citizen
+        ]);
     }
 
     /**
@@ -58,7 +68,14 @@ class CitizenController extends Controller
      */
     public function edit(Citizen $citizen)
     {
-        //
+        $regions = Region::select('id','name_uz')->get();
+        $cities = City::select('id','name_uz')->get();
+
+        return view('citizens.edit', [
+            'citizen' => $citizen,
+            'regions' => $regions,
+            'cities' => $cities
+        ]);
     }
 
     /**
@@ -70,7 +87,18 @@ class CitizenController extends Controller
      */
     public function update(UpdateCitizenRequest $request, Citizen $citizen)
     {
-        //
+        $citizen->full_name = $request->full_name;
+        $citizen->status = 1;
+        $citizen->passport = $request->passport;
+        $citizen->region_id = $request->region_id;
+        $citizen->city_id = $request->city_id;
+        $citizen->gender = $request->gender;
+        $citizen->specialist = $request->specialist;
+        $citizen->phone_number = $request->phone_number;
+        $citizen->birth_date = $request->birth_date;
+        $citizen->update();
+
+        return redirect()->route('rezumes.index');
     }
 
     /**
@@ -81,6 +109,8 @@ class CitizenController extends Controller
      */
     public function destroy(Citizen $citizen)
     {
-        //
+        $citizen->delete();
+
+        return redirect()->route('citizens.index');
     }
 }
