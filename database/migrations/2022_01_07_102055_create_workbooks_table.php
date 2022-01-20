@@ -16,10 +16,10 @@ class CreateWorkbooksTable extends Migration
         Schema::create('workbooks', function (Blueprint $table) {
             $table->id();
             $table->integer('rezume_id');
-            $table->string('old_company_name');
-            $table->string('position_name');
-            $table->string('from_date');
-            $table->string('to_date');
+            $table->string('old_company_name')->nullable();
+            $table->string('position_name')->nullable();
+            $table->string('from_date')->nullable();
+            $table->string('to_date')->nullable();
             $table->timestamps();
         });
     }

@@ -139,35 +139,3 @@ $('#is_history').click(function () {
         $(this).val(0);
     }
 });
-
-// dinamic form
-
-$('#plus_btn').on('click', function(){
-    addRow();
-});
-
-function addRow(){
-    var tr = '<tr>'+
-                    '<td>'+
-                        '<input id="old_company_name" type="text" class="old_company_name form-control" name="old_company_name[]" value="" required="required">'+
-                    '</td>'+
-                    '<td>'+
-                        '<input id="position_name" type="text" class="position_name form-control" name="position_name[]" value="" required="required">'+
-                    '</td>'+
-                    '<td>'+
-                        '<input id="from_date" type="text" class="birth_date from_date form-control" name="from_date[]" value="" required="required">'+
-                    '</td>'+
-                    '<td>'+
-                        '<input id="to_date" type="text" class="birth_date to_date form-control" name="to_date[]" value="" required="required">'+
-                    '</td>'+
-                    '<td>'+
-                        '<button type="button" class="btn btn-danger" style="margin-left:4px" id="minus_btn">O‘chirish</button>'+
-                    '</td>'+
-                '</tr>';
-        $('tbody').append(tr);
-}
-
-$('tbody').on('click', '#minus_btn', function(){
-    $(this).parent().parent().remove();
-});
-

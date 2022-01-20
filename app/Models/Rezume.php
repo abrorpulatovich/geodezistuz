@@ -38,4 +38,9 @@ class Rezume extends Model
     {    
         return Skill::where('id',$id)->first();   
     }
+
+    public function workbooks()
+    {
+        return $this->hasMany(Workbook::class);
+    }
 }

@@ -50,16 +50,16 @@
 				<tbody>
 					<tr>
 						<td>
-							<input id="old_company_name" type="text" class="old_company_name form-control" name="old_company_name[]" value="{{ old('old_company_name') ?? $workbook->old_company_name }}" required="required">
+							<input id="old_company_name" type="text" class="old_company_name form-control" name="workplaces[old_company_name][]" value="{{ old('old_company_name') ?? $workbook->old_company_name }}" required="required">
 						</td>
 						<td>
-							<input id="position_name" type="text" class="position_name form-control" name="position_name[]" value="{{ old('position_name') ?? $workbook->position_name }}" required="required">
+							<input id="position_name" type="text" class="position_name form-control" name="workplaces[position_name][]" value="{{ old('position_name') ?? $workbook->position_name }}" required="required">
 						</td>
 						<td>
-							<input id="from_date" type="text" class="birth_date from_date form-control" name="from_date[]" value="{{ old('from_date') ?? $workbook->from_date }}" required="required">
+							<input id="from_date" type="text" class="birth_date from_date form-control" name="workplaces[from_date][]" value="{{ old('from_date') ?? $workbook->from_date }}" required="required">
 						</td>
 						<td>
-							<input id="to_date" type="text" class="birth_date to_date form-control" name="to_date[]" value="{{ old('to_date') ?? $workbook->to_date }}" required="required">
+							<input id="to_date" type="text" class="birth_date to_date form-control" name="workplaces[to_date][]" value="{{ old('to_date') ?? $workbook->to_date }}" required="required">
 						</td>
 					</tr>
 				</tbody>

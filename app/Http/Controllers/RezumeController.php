@@ -81,8 +81,38 @@ class RezumeController extends Controller
      */
     public function store(StoreRezumeRequest $request)
     {
-        dd($request);
+        $rezume = new Rezume;
+        $rezume->passport = $request->passport;
+        $rezume->specialist_id = $request->specialist_id;
+        $rezume->skill = $request->skill;
+        $rezume->salary_hidden = $request->is_salary ?? 0;
+        $rezume->is_history = $request->is_history ?? 0;
+        $rezume->salary = $request->salary;
+        $rezume->is_published = 0;
+        $rezume->is_active = 1;
+        $rezume->status = 1; //holati yangi
+        $rezume->save();
+
+
+        $workplaces[] = $request->workplaces;
+
+        foreach ($workplaces as $workplace) {
+            dd($workplace);
+            
+            $workbook = new Workbook;
+            
+            $workbook->rezume_id = $rezume->id;
+            $workbook->old_company_name = $workplace['old_company_name'];
+            $workbook->position_name = $workplace['position_name'];
+            $workbook->from_date = $workplace['from_date'];
+            $workbook->to_date = $workplace['to_date'];
+
+            $workbook->save();
+        }
+
+        return redirect()->route('rezumes.index');
     }
+    
 
     /**
      * Display the specified resource.

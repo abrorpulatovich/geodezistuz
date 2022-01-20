@@ -14,7 +14,7 @@ class AddColumnsToCitizensTable extends Migration
     public function up()
     {
         Schema::table('rezumes', function (Blueprint $table) {
-            $table->string('salary')->after('skill');
+            $table->string('salary')->after('skill')->nullable();
             $table->boolean('salary_hidden')->after('salary');
             $table->boolean('is_active')->after('salary_hidden');
             $table->boolean('is_published')->after('is_active');
