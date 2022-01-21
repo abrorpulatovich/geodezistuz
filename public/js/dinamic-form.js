@@ -1,28 +1,42 @@
 // dinamic form
 
-$('#plus_btn').on('click', function(){
+var counter = 1;
+
+$(document).on('click', '#plus_btn', function(){
     addRow();
 });
+
+
 
 function addRow(){
     var tr = '<tr>'+
                 '<td>'+
-                    '<input id=\"old_company_name\" type="text" class=\"form-control\" name="workplaces[][old_company_name]" value="" required="required">'+
+                    '<input id="old_company_name" type="text" class="form-control" name="workplaces[' + counter + '][old_company_name]" value="" required="required">'+
                 '</td>'+
                 '<td>'+
-                    '<input id=\"position_name\" type="text" class=\"form-control\" name="workplaces[][position_name]" value="" required="required">'+
+                    '<input id="position_name" type="text" class="form-control" name="workplaces[' + counter + '][position_name]" value="" required="required">'+
                 '</td>'+
                 '<td>'+
-                    '<input id=\"from_date\" type="text" class=\"birth_date form-control\" name="workplaces[][from_date]" value="" required="required">'+
+                    '<input id="from_date" type="text" class="form-control dinamic_date' + counter + '" name="workplaces[' + counter + '][from_date]" value="" required="required">'+
                 '</td>'+
                 '<td>'+
-                    '<input id=\"to_date\" type="text" class=\"birth_date form-control\" name="workplaces[][to_date]" value="" required="required">'+
+                    '<input id="to_date" type="text" class="form-control dinamic_date' + counter + '" name="workplaces[' + counter + '][to_date]" value="" required="required">'+
                 '</td>'+
                 '<td>'+
-                    '<button type="button" class=\"btn btn-danger\" style="margin-left:4px" id=\"minus_btn\">O‘chirish</button>'+
+                    '<button type="button" class="btn btn-danger" style="margin-left:4px" id="minus_btn">O‘chirish</button>'+
                 '</td>'+
             '</tr>';
     $('tbody').append(tr);
+    
+    $('.dinamic_date' + counter).inputmask("datetime",{
+         mask: "1-2-y",
+         leapday: "-02-29",
+         placeholder: "dd-mm-yyyy",
+         separator: "-", 
+         alias: "dd-mm-yyyy"
+    });
+
+    counter++;
 }
 
 $('tbody').on('click', '#minus_btn', function(){

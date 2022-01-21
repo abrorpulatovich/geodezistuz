@@ -93,10 +93,9 @@ class RezumeController extends Controller
         $rezume->status = 1; //holati yangi
         $rezume->save();
 
-        $workplaces[] = $request->input('workplaces');
+        $workplaces = $request->input('workplaces');
 
         foreach ($workplaces as $workplace) {
-        dd($workplace[]);
 
             $workbook = new Workbook;
             

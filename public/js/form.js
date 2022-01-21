@@ -1,4 +1,4 @@
-      
+Inputmask().mask("input");    
 $(document).ready(function(){
 
     $('.phone').inputmask({mask:'+\\9\\9\\899 999 99 99'});

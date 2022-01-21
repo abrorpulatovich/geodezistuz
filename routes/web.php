@@ -33,6 +33,8 @@ Route::get('/getCities/{region_id}', [App\Http\Controllers\DataController::class
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function(){
+    
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('answers', AnswerController::class);
@@ -63,3 +65,4 @@ Auth::routes();
 
     Route::resource('citizens', CitizenController::class);
     Route::resource('rezumes', RezumeController::class);
+});
