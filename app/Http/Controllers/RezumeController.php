@@ -118,9 +118,13 @@ class RezumeController extends Controller
      * @param  \App\Models\Rezume  $rezume
      * @return \Illuminate\Http\Response
      */
-    public function show(Rezume $rezume)
+    public function show($rezume)
     {
-        //
+        $rezume = Rezume::findOrFail($rezume);
+
+        return view('rezumes.show', [
+            'rezume' => $rezume
+        ]);   
     }
 
     /**

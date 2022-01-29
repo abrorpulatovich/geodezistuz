@@ -67,4 +67,23 @@ class ModeratorController extends Controller
         return redirect()->route('citizens.index');
 
     }
+
+    public function rezumeCheck($id)
+    {
+        $citizen = Citizen::where('id', $id)->first();
+        $citizen_status = $citizen->status;
+
+        if($citizen_status == 1 || $citizen_status == 3)
+        {
+            $citizen->update(['status' => 2]);
+        }
+
+        if ($citizen_status == 2)
+        {
+            $citizen->update(['status' => 3]);
+        }
+
+        return redirect()->route('citizens.index');
+
+    }
 }

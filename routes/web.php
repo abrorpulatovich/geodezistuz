@@ -31,7 +31,6 @@ Route::get('/', function () {
 
 Route::get('/getCities/{region_id}', [App\Http\Controllers\DataController::class, 'getCities'])->name('getCities');
 
-Auth::routes();
 
 Route::middleware(['auth'])->group(function(){
     
@@ -45,6 +44,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('company/{id}', [App\Http\Controllers\ModeratorController::class, 'companyCheck'])->name('companies.check');
     Route::post('vacancy/{id}', [App\Http\Controllers\ModeratorController::class, 'vacancyCheck'])->name('vacancies.check');
     Route::post('citizen/{id}', [App\Http\Controllers\ModeratorController::class, 'citizenCheck'])->name('citizens.check');
+    Route::post('rezume/{id}', [App\Http\Controllers\ModeratorController::class, 'rezumeCheck'])->name('rezumes.check');
 
 
 // admin
@@ -66,3 +66,5 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('citizens', CitizenController::class);
     Route::resource('rezumes', RezumeController::class);
 });
+
+Auth::routes();
