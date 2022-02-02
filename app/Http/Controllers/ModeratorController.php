@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Vacancy;
+use App\Models\Rezume;
 use App\Models\Citizen;
 
 
@@ -70,20 +71,20 @@ class ModeratorController extends Controller
 
     public function rezumeCheck($id)
     {
-        $citizen = Citizen::where('id', $id)->first();
-        $citizen_status = $citizen->status;
+        $rezume = Rezume::where('id', $id)->first();
+        $rezume_status = $rezume->is_published;
 
-        if($citizen_status == 1 || $citizen_status == 3)
+        if($rezume_status == 0 || $rezume_status == 2)
         {
-            $citizen->update(['status' => 2]);
+            $rezume->update(['is_published' => 1]);
         }
 
-        if ($citizen_status == 2)
+        if ($rezume_status == 1)
         {
-            $citizen->update(['status' => 3]);
+            $rezume->update(['is_published' => 2]);
         }
 
-        return redirect()->route('citizens.index');
+        return redirect()->route('rezumes.index');
 
     }
 }

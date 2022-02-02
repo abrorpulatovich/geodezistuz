@@ -57,6 +57,8 @@
                                                     <span class="badge bg-danger text-wrap">Tasdiqlanmagan</span> 
                                                 @elseif($rezume->is_published == 1)
                                                     <span class="badge bg-success text-wrap">Tasdiqlangan</span>
+                                                @elseif($rezume->is_published == 2)
+                                                    <span class="badge bg-danger text-wrap">Bloklangan</span>
                                                 @endif
                                             </td>
                                             <td>

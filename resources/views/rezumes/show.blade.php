@@ -84,7 +84,7 @@
 							@if($rezume->is_published == 0 || $rezume->is_published == 2)
 								<form action="{{ route('rezumes.check', ['id' => $rezume->id]) }}" method="POST">
 	                                @csrf
-	                                <button type="submit" style="margin-left:4px;" class="btn btn-success "onclick="return confirm('Haqiqatdan ham ushbu vakansiyani tasdiqlaysizmi?')"><i class="bi bi-check-circle"></i> Tasdiqlash</button>
+	                                <button type="submit" style="margin-left:4px;" class="btn btn-success "onclick="return confirm('Haqiqatdan ham ushbu rezumeni tasdiqlaysizmi?')"><i class="bi bi-check-circle"></i> Tasdiqlash</button>
 	                            </form>
 	                        @elseif($rezume->is_published == 1)
 	                        	<form action="{{ route('rezumes.check', ['id' => $rezume->id]) }}" method="POST">

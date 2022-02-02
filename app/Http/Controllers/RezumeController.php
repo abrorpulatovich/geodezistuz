@@ -93,19 +93,22 @@ class RezumeController extends Controller
         $rezume->status = 1; //holati yangi
         $rezume->save();
 
-        $workplaces = $request->input('workplaces');
+        if(!$request->is_history)
+        {
+            $workplaces = $request->input('workplaces');
 
-        foreach ($workplaces as $workplace) {
+            foreach ($workplaces as $workplace) {
 
-            $workbook = new Workbook;
-            
-            $workbook->rezume_id = $rezume->id;
-            $workbook->old_company_name = $workplace['old_company_name'];
-            $workbook->position_name = $workplace['position_name'];
-            $workbook->from_date = $workplace['from_date'];
-            $workbook->to_date = $workplace['to_date'];
+                $workbook = new Workbook;
+                
+                $workbook->rezume_id = $rezume->id;
+                $workbook->old_company_name = $workplace['old_company_name'];
+                $workbook->position_name = $workplace['position_name'];
+                $workbook->from_date = $workplace['from_date'];
+                $workbook->to_date = $workplace['to_date'];
 
-            $workbook->save();
+                $workbook->save();
+            }
         }
 
         return redirect()->route('rezumes.index');
