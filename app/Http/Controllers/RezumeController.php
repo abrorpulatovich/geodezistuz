@@ -124,9 +124,12 @@ class RezumeController extends Controller
     public function show($rezume)
     {
         $rezume = Rezume::findOrFail($rezume);
+        $workbooks = Workbook::where('rezume_id', $rezume->id)->get();
+
 
         return view('rezumes.show', [
-            'rezume' => $rezume
+            'rezume' => $rezume,
+            'workbooks' => $workbooks
         ]);   
     }
 
@@ -161,6 +164,8 @@ class RezumeController extends Controller
      */
     public function destroy(Rezume $rezume)
     {
-        //
+        $rezume->delete();
+
+        return redirect()->route('rezumes.index');
     }
 }

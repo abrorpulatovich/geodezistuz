@@ -70,7 +70,7 @@
                                                         <form action="{{ route('rezumes.destroy', ['rezume' => $rezume->id]) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" style="margin-left:4px;" class="btn btn-danger" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i></button>
+                                                            <button type="submit" style="margin-left:4px;" class="btn btn-danger" onclick="return confirm('Haqiqatdan ham ushbu rezumeni o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i></button>
                                                         </form>
                                                 </div>
                                             </td>

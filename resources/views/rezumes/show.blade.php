@@ -16,7 +16,7 @@
 						 		<form action="{{ route('rezumes.destroy', ['rezume' => $rezume->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu vakansiyani o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i> O‘chirish</button>
+                                    <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu rezumeni o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i> O‘chirish</button>
                                 </form>
 						 </div>
 						<table class="table table-bordered">
@@ -31,11 +31,6 @@
 							<tr>
 								<td>Hudud</td>
 								<td>{{ $rezume::regionName($rezume::citizen($rezume->passport)->region_id)->name_uz }}</td>
-							</tr>
-							<tr>
-								<tr>
-									<td>ss</td>
-								</tr>
 							</tr>
 							<tr>
 								<td>Mutaxassisligi</td>
@@ -79,6 +74,32 @@
 								<td>Qo'shilgan vaqt</td>
 								<td>{{ $rezume->created_at }}</td>
 							</tr>
+						</table>
+						<table class="table table-bordered">
+							@if($rezume->is_history)
+							<tr>
+								<td>Ilgari ishlagan joylari</td>
+									<td>Ilgari hech qayerga ishlamagan</td>
+							</tr>
+							@else
+							<tr>
+								<td colspan="4">Ilgari ishlagan joylari</td>
+							</tr>
+							<tr>
+								<td>Korxona nomi</td>
+								<td>Qanday lavozimda ishlagan?</td>
+								<td>Ishni boshlagan sana</td>
+								<td>Ishdan bo‘shatilgan sana</td>
+							</tr>
+							@foreach($workbooks as $workbook)
+								<tr>
+									<td>{{ $workbook->old_company_name }}</td>
+									<td>{{ $workbook->position_name }}</td>
+									<td>{{ $workbook->from_date }}</td>
+									<td>{{ $workbook->to_date }}</td>
+								</tr>
+							@endforeach
+							@endif
 						</table>
 						@if(Auth::user()->status == 3)
 							@if($rezume->is_published == 0 || $rezume->is_published == 2)
