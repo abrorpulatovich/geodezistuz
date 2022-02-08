@@ -141,7 +141,17 @@ class RezumeController extends Controller
      */
     public function edit(Rezume $rezume)
     {
-        //
+        $user_id = Auth::id();
+        $citizen = Citizen::where('user_id', $user_id)->get();
+        $specialists = Specialist::select('id','name')->get();
+        $skills = Skill::select('id','name')->get();
+
+        return view('rezumes.create', [
+            'rezume' => $rezume,
+            'citizen' => $citizen,
+            'specialists' => $specialists,
+            'skills' => $skills
+        ]);
     }
 
     /**
