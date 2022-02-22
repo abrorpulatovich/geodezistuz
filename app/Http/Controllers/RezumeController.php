@@ -47,6 +47,15 @@ class RezumeController extends Controller
                 'rezumes' => $rezumes
             ]);
         }
+
+        if($user->status == 2)
+        {
+            $rezumes = Rezume::where('is_published', 1)->orderByDesc('created_at')->paginate(20);
+
+            return view('rezumes.index', [
+                'rezumes' => $rezumes
+            ]);
+        }
     }
 
     /**

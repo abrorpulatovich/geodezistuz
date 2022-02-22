@@ -42,6 +42,7 @@ $(document).ready(function() {
          $('#comp_logoshow').show();
 
          $('#status').val('2');
+         $('#nameregister').text('Korxona ro‘yxatdan o‘tish')
 
       } else {
          $('#emailhide').show();
@@ -68,6 +69,7 @@ $(document).ready(function() {
          $('#comp_logoshow').hide();
 
          $('#status').val('1');
+         $('#nameregister').text('Fuqaro ro‘yxatdan o‘tish')         
       }
    });
 });

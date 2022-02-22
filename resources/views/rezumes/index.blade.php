@@ -64,14 +64,14 @@
                                             <td>
                                                 <div class="btn-group">
                                                         <a href="{{ route('rezumes.show', ['rezume' => $rezume->id]) }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
-                                                    @if(Auth::user()->status == 2)
-                                                        <a href="{{ route('rezumes.edit', ['rezume' => $rezume->id]) }}" class="btn btn-success" style="margin-left:4px"><i class="bi bi-pencil"></i></a>
-                                                    @endif
+                                                    @if(Auth::user()->status == 1)
+                                                        
                                                         <form action="{{ route('rezumes.destroy', ['rezume' => $rezume->id]) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" style="margin-left:4px;" class="btn btn-danger" onclick="return confirm('Haqiqatdan ham ushbu rezumeni o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i></button>
                                                         </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

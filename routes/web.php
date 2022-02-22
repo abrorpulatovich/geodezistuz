@@ -25,17 +25,16 @@ use App\Http\Controllers\ModeratorController;
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('template.index');
+})->name('template.index');
 
 Route::get('/getCities/{region_id}', [App\Http\Controllers\DataController::class, 'getCities'])->name('getCities');
 
 
 Route::middleware(['auth'])->group(function(){
     
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
     Route::resource('answers', AnswerController::class);
     Route::resource('questions', QuestionController::class);
     Route::resource('comments', CommentController::class);

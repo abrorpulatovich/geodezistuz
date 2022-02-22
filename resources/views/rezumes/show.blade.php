@@ -12,12 +12,12 @@
 						 <div class="mb-3 btn-group">
 						 	@if(Auth::user()->status == 1 && $rezume->is_published == 0)
 						 		<a type="button" href="{{ route('rezumes.edit', ['rezume' => $rezume->id]) }}" class="btn btn-success"><i class="bi bi-pencil"></i> Tahrirlash</a>
-						  	@endif
 						 		<form action="{{ route('rezumes.destroy', ['rezume' => $rezume->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" style="margin-left: 4px;" onclick="return confirm('Haqiqatdan ham ushbu rezumeni o‘chirmoqchimisiz?')"><i class="bi bi-trash"></i> O‘chirish</button>
                                 </form>
+						  	@endif
 						 </div>
 						<table class="table table-bordered">
 							<tr>
