@@ -15,12 +15,20 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($status = null)
     {
-        $companies = Company::orderByDesc('created_at')->paginate(20);
+        $companies = Company::orderByDesc('created_at')->paginate(5);
+
+        if($status) {
+            $companies = Company::where('status', $status)->orderByDesc('created_at')->paginate(5);
+        }
+
+        $count = Company::where('status', 1)->get()->count();
 
          return view('companies.index', [
             'companies' => $companies,
+            'count' => $count,
+            'status' => $status
         ]);
     }
 

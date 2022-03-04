@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('vacancy/{id}', [App\Http\Controllers\ModeratorController::class, 'vacancyCheck'])->name('vacancies.check');
     Route::post('citizen/{id}', [App\Http\Controllers\ModeratorController::class, 'citizenCheck'])->name('citizens.check');
     Route::post('rezume/{id}', [App\Http\Controllers\ModeratorController::class, 'rezumeCheck'])->name('rezumes.check');
+    
 
 
 // admin
@@ -57,11 +58,13 @@ Route::middleware(['auth'])->group(function(){
 
 // company
 
+    Route::get('companies/status/{status}', [App\Http\Controllers\CompanyController::class, 'index'])->name('companies.status');
     Route::resource('companies', CompanyController::class);
     Route::resource('vacancies', VacancyController::class);
 
 // citizen
-
+    
+    Route::get('citizens/status/{status}', [App\Http\Controllers\CitizenController::class, 'index'])->name('citizens.status');
     Route::resource('citizens', CitizenController::class);
     Route::resource('rezumes', RezumeController::class);
 });

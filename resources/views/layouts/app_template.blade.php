@@ -10,14 +10,14 @@
     <title>@yield('title')</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/line-icons.css">
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.theme.default.css">
-    <link rel="stylesheet" href="/assets/css/slicknav.min.css">
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    <link rel="stylesheet" href="/assets/css/main.css">    
-    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/line-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/owl.theme.default.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/slicknav.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/main.css') }}">    
+    <link rel="stylesheet" href="{{ asset('/assets/css/responsive.css') }}">
     
 </head>
 <body>
@@ -38,18 +38,18 @@
         </div>
         <!-- End Preloader -->
 
-    <script src="/assets/js/jquery-min.js"></script>
-    <script src="/assets/js/popper.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/color-switcher.js"></script>
-    <script src="/assets/js/owl.carousel.min.js"></script>     
-    <script src="/assets/js/jquery.slicknav.js"></script>     
-    <script src="/assets/js/wow.js"></script>   
-    <script src="/assets/js/jquery.counterup.min.js"></script>      
-    <script src="/assets/js/waypoints.min.js"></script>     
-    <script src="/assets/js/form-validator.min.js"></script>
-    <script src="/assets/js/contact-form-script.js"></script>   
-    <script src="/assets/js/main.js"></script>
+    <script src="{{ asset('/assets/js/jquery-min.js') }}"></script>
+    <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/color-switcher.js') }}"></script>
+    <script src="{{ asset('/assets/js/owl.carousel.min.js') }}"></script>     
+    <script src="{{ asset('/assets/js/jquery.slicknav.js') }}"></script>     
+    <script src="{{ asset('/assets/js/wow.js') }}"></script>   
+    <script src="{{ asset('/assets/js/jquery.counterup.min.js') }}"></script>      
+    <script src="{{ asset('/assets/js/waypoints.min.js') }}"></script>     
+    <script src="{{ asset('/assets/js/form-validator.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/contact-form-script.js') }}"></script>   
+    <script src="{{ asset('/assets/js/main.js') }}"></script>
     
     <script src="{{ asset('js/jquery.inputmask.bundle.js') }}" defer></script>
     <script src="{{ asset('js/form.js') }}" defer></script>

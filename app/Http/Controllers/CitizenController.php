@@ -15,12 +15,20 @@ class CitizenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($status = null)
     {
-        $citizens = Citizen::orderByDesc('created_at')->paginate(20);
+        $citizens = Citizen::orderByDesc('created_at')->paginate(5);
+
+        if($status) {
+            $citizens = Citizen::where('status', $status)->orderByDesc('created_at')->paginate(5);
+        }
+
+        $count = Citizen::where('status', 1)->get()->count();
 
          return view('citizens.index', [
             'citizens' => $citizens,
+            'count' => $count,
+            'status' => $status
         ]);
     }
 

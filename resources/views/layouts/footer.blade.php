@@ -1,4 +1,3 @@
-<!-- Footer Section Start -->
 <footer>
   <!-- Footer Area Start -->
   <section class="footer-Content">
@@ -8,34 +7,33 @@
           <div class="widget">
             <div class="footer-logo"><img src="assets/img/logo3_foot.png" alt=""></div>
             <div class="textwidget">
-              <p>Sed consequat sapien faus quam bibendum convallis quis in nulla. Pellentesque volutpat odio eget diam cursus semper.</p>
+              <p>Geodeziya haqida ma‘lumot</p>
             </div>
           </div>
         </div>
         <div class="col-lg-6 col-md-4 col-xs-12">
           <div class="widget">
-            <h3 class="block-title">Quick Links</h3>
+            <h3 class="block-title">Menu</h3>
             <ul class="menu">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Support</a></li>
-              <li><a href="#">License</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="{{ route('template.index') }}">Bosh sahifa</a></li>
+              <li><a href="#">Yangiliklar</a></li>
+              <li><a href="{{ route('rezumes.create') }}">Rezumelar</a></li>
+              <li><a href="{{ route('vacancies.index') }}">Vakansiyalar</a></li>
             </ul>
             <ul class="menu">
-              <li><a href="#">Terms & Conditions</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Refferal Terms</a></li>
-              <li><a href="#">Product License</a></li>
+              <li><a href="#">Kitoblar</a></li>
+              <li><a href="#">Dasturlar</a></li>
+              <li><a href="#">Videolar</a></li>
             </ul>
           </div>
         </div>
         <div class="col-lg-3 col-md-4 col-xs-12">
           <div class="widget">
-            <h3 class="block-title">Subscribe Now</h3>
-            <p>Sed consequat sapien faus quam bibendum convallis.</p> 
+            <h3 class="block-title">Hoziroq obuna bo‘ling</h3>
+            <p></p> 
             <form method="post" id="subscribe-form" name="subscribe-form" class="validate">
               <div class="form-group is-empty">
-                <input type="email" value="" name="Email" class="form-control" id="EMAIL" placeholder="Enter Email..." required="">
+                <input type="email" value="" name="Email" class="form-control" id="EMAIL" placeholder="Email..." required="">
                 <button type="submit" name="subscribe" id="subscribes" class="btn btn-common sub-btn"><i class="lni-envelope"></i></button>
                 <div class="clearfix"></div>
               </div>
@@ -69,4 +67,4 @@
 </footer>
 <!-- Footer Section End -->  
 
-<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<!-- jQuery first, then Tether, then Bootstrap JS.
