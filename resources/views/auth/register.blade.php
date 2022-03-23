@@ -2,10 +2,9 @@
 
 @section('content')
 
-
 <div class="page-header">
   <div class="container">
-    <div class="row">         
+    <div class="row">
       <div class="col-lg-12">
         <div class="inner-header">
           <h3>{{ __('Ro‘yxatdan o‘tish') }}</h3>
@@ -20,29 +19,27 @@
     <div class="row justify-content-center">
       <div class="col-lg-9 col-md-12 col-xs-12">
         <div class="page-login-form box post-job">
-          
-          <h6>Foydalanuvchini tanlang!</h6>
 
-            <input type="radio" name="user_check" class="btn-check" value="role_citizen" id="citizen" checked autocomplete="off" style="display:none;">
-            <label for="citizen" class="btn btn-common mt-3">Fuqaro</label>
+{{--          <h6>Foydalanuvchini tanlang!</h6>--}}
 
-            <input type="radio" name="user_check" class="btn-check" value="role_company" id="company" autocomplete="off" style="display:none">
-            <label for="company" class="btn btn-common mt-3">Korxona</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="radio" name="user_check" class="btn-check" value="role_citizen" id="citizen" checked autocomplete="off" style="display:none;">
+                    <label for="citizen" class="btn btn-common btn-block mt-3">Jismoniy shaxs</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="radio" name="user_check" class="btn-check" value="role_company" id="company" autocomplete="off" style="display:none">
+                    <label for="company" class="btn btn-common btn-block mt-3">Yuridik shaxs</label>
+                </div>
+            </div>
 
             <h3 class="mt-2" id="nameregister">
-                {{ __('Fuqaro ro‘yxatdan o‘tish') }}
+                {{ __('Jismoniy shaxs uchun ro‘yxatdan o‘tish') }}
             </h3>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
-            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" class="form-ad">
+            @include('admin.includes.errors')
+
+            <form method="POST" action="{{ route('post_register') }}" enctype="multipart/form-data" class="form-ad">
                 @csrf
 
                 <div class="row mb-3">
@@ -62,7 +59,7 @@
                         <label for="company_name" class="control-label">{{ __('Kompaniya nomi') }} <span style="color: red;">*</span></label>
                         <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" autocomplete="company_name" autofocus>
                     </div>
-                    
+
                     <!-- company -->
                     <div class="col-md-4 form-group" style="display: none;" id="comp_innshow">
                         <label for="company_inn" class="control-label">{{ __('Kompaniya inn') }} <span style="color: red;">*</span></label>
@@ -71,8 +68,8 @@
 
                     <!-- citizen -->
                     <div class="col-md-4 form-group" id="full_namehide">
-                        <label for="name" class="control-label">{{ __('F.I.O') }} <span style="color: red;">*</span></label>
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
+                        <label for="full_name" class="control-label">{{ __('F.I.O') }} <span style="color: red;">*</span></label>
+                        <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ old('full_name') }}" autocomplete="full_name" autofocus>
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -107,11 +104,11 @@
                     </div>
 
                     <!-- citizen -->
-                    <div class="col-md-3 form-group" id="birthhide">
+                    <div class="col-md-4 form-group" id="birthhide">
                         <label for="birth_date" class="control-label">{{ __('Tug‘ilgan sana') }} <span style="color: red;">*</span></label>
 
                         <input id="birth_date" type="text" class="birth_date form-control @error('birth_date') is-invalid @enderror" name="birth_date" value="{{ old('birth_date') }}" autocomplete="birth_date" required="required">
-                    </div>                            
+                    </div>
                 </div>
                 <div class="row mb-3">
 
@@ -148,7 +145,7 @@
                         <div class="radio">
                             <input type="radio" name="gender" id="genderM" checked value="1">
                             <label for="genderM" class="radio-label">Erkak</label><br>
-                        
+
                             <input type="radio" name="gender" id="genderF" value="0">
                             <label for="genderF" class="radio-label">Ayol</label>
                         </div>
@@ -172,8 +169,8 @@
                     <!-- company -->
                     <div class="col-md-4 form-group" style="display: none;" id="comp_siteshow">
                         <label for="web_site" class="control-label">{{ __('Web sayt') }}</label>
-                        <input id="web_site" type="web_site" class="form-control @error('web_site') is-invalid @enderror" name="web_site" value="{{ old('web_site') }}" autocomplete="web_site">
-                    </div>          
+                        <input id="web_site" type="text" class="form-control @error('website') is-invalid @enderror" name="website" value="{{ old('website') }}" autocomplete="website">
+                    </div>
 
                     <!-- company -->
                     <div class="col-md-4 form-group" style="display: none;" id="comp_logoshow">
@@ -183,8 +180,13 @@
 
                     <!-- citizen -->
                     <div class="col-md-4 form-group" id="specialisthide">
-                        <label for="specialist" class="control-label">{{ __('Mutaxassislik') }}</label>
-                        <input id="specialist" type="text" class="form-control" name="specialist" value="{{ old('specialist') }}">
+                        <label for="specialist_id" class="col-form-label text-md-end">{{ __('Mutaxassislik') }}</label>
+                        <select name="specialist_id" required id="specialist_id" class="form-control">
+                            <option value="">Vakansiyani tanlang...</option>
+                            @foreach($specialists as $specialist)
+                                <option value="{{ $specialist->id }}" data-id="{{ $specialist->id }}" >{{ $specialist->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <!-- citizen -->

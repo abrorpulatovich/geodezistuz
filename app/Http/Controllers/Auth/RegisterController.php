@@ -46,7 +46,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'company_name' => ['required_if:status,2'],
             'director_name' => ['required_if:status,2'],
             'company_inn' => ['required_if:status,2', 'unique:companies'],
-            
+
             'passport' => ['required_if:status,1', 'unique:citizens'],
             'birth_date' => ['required_if:status,1'],
             'name' => ['required_if:status,1'],
@@ -72,27 +72,26 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
         $user = User::create([
-
             'status' => $data['status'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
             'password_text' => $data['password']
         ]);
 
-        if($data['status'] == 1) {
-            
+        if ($data['status'] == 1) {
+
             $user->update([
                 'name' => $data['name'],
                 'email' => $data['email']
             ]);
 
-            $passport = substr($data['passport'],0,2).substr($data['passport'],3,7);
+            $passport = substr($data['passport'], 0, 2) . substr($data['passport'], 3, 7);
 
             $citizen = Citizen::create([
                 'full_name' => $data['name'],
@@ -115,12 +114,12 @@ class RegisterController extends Controller
 
         }
 
-        if($data['status'] == 2) {
-            
+        if ($data['status'] == 2) {
+
             $user->update([
                 'name' => $data['company_name']
             ]);
-            
+
             $company = Company::create([
                 'user_id' => $user->id,
                 'region_id' => $data['region_id'],

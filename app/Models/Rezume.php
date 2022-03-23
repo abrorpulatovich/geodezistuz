@@ -11,38 +11,66 @@ class Rezume extends Model
 {
     use HasFactory, SoftDeletes;
 
-     protected $fillable = [
+    protected $fillable = [
         'passport',
+        'user_id',
         'specialist_id',
         'skill',
         'is_published',
         'is_active',
         'status',
         'salary_hidden',
+        'about_me',
         'is_history'
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('is_active', 0);
+    }
 
     public static function regionName($id)
-    {    
-        return Region::where('id',$id)->first();   
+    {
+        return Region::where('id', $id)->first();
     }
 
     public static function citizen($passport)
-    {    
-        return Citizen::where('passport',$passport)->first();   
+    {
+        return Citizen::where('passport', $passport)->first();
     }
-    public static function specialist($id)
-    {    
-        return Specialist::where('id',$id)->first();   
+
+    public function specialist()
+    {
+        return $this->belongsTo(Specialist::class);
     }
+
     public static function skill($id)
-    {    
-        return Skill::where('id',$id)->first();   
+    {
+        return Skill::where('id', $id)->first();
     }
 
     public function workbooks()
     {
         return $this->hasMany(Workbook::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y H:i:s', strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y H:i:s', strtotime($value));
     }
 }

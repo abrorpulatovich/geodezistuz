@@ -25,12 +25,32 @@ class Company extends Model
     ];
 
     public static function regionName($id)
-    {    
-        return Region::where('id',$id)->first();   
+    {
+        return Region::where('id',$id)->first();
     }
 
     public static function cityName($id)
-    {    
-        return City::where('id',$id)->first();   
+    {
+        return City::where('id',$id)->first();
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function vacancies()
+    {
+        return $this->hasMany(Vacancy::class);
     }
 }

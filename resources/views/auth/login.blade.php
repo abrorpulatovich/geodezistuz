@@ -4,7 +4,7 @@
 
 <div class="page-header">
   <div class="container">
-    <div class="row">         
+    <div class="row">
       <div class="col-lg-12">
         <div class="inner-header">
           <h3>{{ __('Kirish') }}</h3>
@@ -22,7 +22,10 @@
           <h3>
             Kirish
           </h3>
-          <form method="POST" class="login-form" action="{{ route('login') }}">
+            @if(session()->has('username_or_password_incorrect'))
+                <div class="alert alert-danger"><i class="lni lni-warning"></i> {{ session()->get('username_or_password_incorrect') }}</div>
+            @endif
+          <form method="POST" class="login-form" action="{{ route('post_login') }}">
                 @csrf
                     <div class="form-group">
                       <div class="input-icon">

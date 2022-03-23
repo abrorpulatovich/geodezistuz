@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,6 +25,7 @@ class User extends Authenticatable
         'password',
         'password_text',
         'username',
+        'can_login',
         'status'
     ];
 
@@ -47,4 +47,40 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function citizen()
+    {
+        return $this->hasOne(Citizen::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function getRole()
+    {
+        $role = '';
+
+        if ($this->status == 1) {
+            $role = "<span class='badge badge-success'><i class='lni lni-user'></i> Jismoniy shaxs</span>";
+        } elseif ($this->status == 2) {
+            $role = "<span class='badge badge-info'><i class='lni lni-home'></i> Yuridik shaxs</span>";
+        } elseif ($this->status == 3) {
+            $role = "<span class='badge badge-info'><i class='lni lni-user'></i> Moderator</span>";
+        }
+
+        return $role;
+    }
+
+    public function getCanDo()
+    {
+        $cando = "<span class='badge badge-danger'>Yo'q</span>";
+
+        if ($this->can_login) {
+            $cando = "<span class='badge badge-success'>Ha</span>";
+        }
+
+        return $cando;
+    }
 }

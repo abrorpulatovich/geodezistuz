@@ -24,11 +24,11 @@ class RezumeController extends Controller
         $user = Auth::user();
 
         if($user->status == 1)
-        { 
-            $citizen = Citizen::where('user_id', $user->id)->get();
-            $citizen_id = $citizen[0]->id;
-            $citizen_status = $citizen[0]->status;
-            $passport = $citizen[0]->passport;
+        {
+            $citizen = Citizen::where('user_id', $user->id)->first();
+            $citizen_id = $citizen->id;
+            $citizen_status = $citizen->status;
+            $passport = $citizen->passport;
 
             $rezumes = Rezume::where('passport', $passport)->orderByDesc('created_at')->paginate(20);
 
@@ -69,15 +69,13 @@ class RezumeController extends Controller
         $workbook = new Workbook();
 
         $user_id = Auth::id();
-        $citizen = Citizen::where('user_id', $user_id)->get();
-        $specialists = Specialist::select('id','name')->get();
+        $citizen = Citizen::where('user_id', $user_id)->first();
         $skills = Skill::select('id','name')->get();
 
         return view('rezumes.create', [
             'rezume' => $rezume,
             'workbook' => $workbook,
             'citizen' => $citizen,
-            'specialists' => $specialists,
             'skills' => $skills
         ]);
     }
@@ -109,7 +107,7 @@ class RezumeController extends Controller
             foreach ($workplaces as $workplace) {
 
                 $workbook = new Workbook;
-                
+
                 $workbook->rezume_id = $rezume->id;
                 $workbook->old_company_name = $workplace['old_company_name'];
                 $workbook->position_name = $workplace['position_name'];
@@ -122,7 +120,7 @@ class RezumeController extends Controller
 
         return redirect()->route('rezumes.index');
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -139,7 +137,7 @@ class RezumeController extends Controller
         return view('rezumes.show', [
             'rezume' => $rezume,
             'workbooks' => $workbooks
-        ]);   
+        ]);
     }
 
     /**
@@ -186,5 +184,16 @@ class RezumeController extends Controller
         $rezume->delete();
 
         return redirect()->route('rezumes.index');
+    }
+
+    public function rezumes()
+    {
+        $rezumes = Rezume::where('is_active', 1)->orderBy('created_at', 'desc')->get();
+        return view('rezumes', compact('rezumes'));
+    }
+
+    public function rezume_details(Rezume $rezume)
+    {
+        return view('rezume_details', compact('rezume'));
     }
 }

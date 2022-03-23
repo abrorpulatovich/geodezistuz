@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vacancy;
-use App\Models\Specialist;
-use App\Models\Skill;
 use App\Models\Company;
-use App\Http\Requests\StoreVacancyRequest;
-use App\Http\Requests\UpdateVacancyRequest;
+use App\Models\Specialist;
+use App\Models\User;
+use App\Models\Vacancy;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -20,32 +19,11 @@ class VacancyController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('user_id', $user->id)->first();
+        $vacancies = Vacancy::where('company_id', $company->id)->orderByDesc('created_at')->get();
 
-        if($user->status == 2)
-        { 
-            $company = Company::where('user_id', $user->id)->get();
-            $company_id = $company[0]->id;
-            $company_status = $company[0]->status;
-            $company_inn = $company[0]->company_inn;
-
-            $vacancies = Vacancy::where('company_inn', $company_inn)->orderByDesc('created_at')->paginate(20);
-
-            return view('vacancies.index', [
-                'vacancies' => $vacancies,
-                'company_id' => $company_id,
-                'company_status' => $company_status
-            ]);
-        }
-
-        if($user->status == 0 || $user->status == 3)
-        {
-            $vacancies = Vacancy::orderByDesc('created_at')->paginate(20);
-
-            return view('vacancies.index', [
-                'vacancies' => $vacancies
-            ]);
-        }
+        return view('profile.company', compact('vacancies', 'company'));
     }
 
     /**
@@ -55,41 +33,38 @@ class VacancyController extends Controller
      */
     public function create()
     {
-        $vacancy = new Vacancy();
-
-        $user_id = Auth::id();
-        $company = Company::where('user_id', $user_id)->get();
-        $specialists = Specialist::select('id','name')->get();
-        $skills = Skill::select('id','name')->get();
-
-        return view('vacancies.create', [
-            'vacancy' => $vacancy,
-            'company' => $company,
-            'specialists' => $specialists,
-            'skills' => $skills
-        ]);
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('user_id', $user->id)->first();
+        return view('profile.addvacancy', compact('company'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreVacancyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreVacancyRequest $request)
+    public function store(Request $request)
     {
-        $vacancy = new Vacancy;
-        $vacancy->company_inn = $request->company_inn;
-        $vacancy->specialist_id = $request->specialist_id;
-        $vacancy->skill = $request->skill;
-        $vacancy->salary_hidden = $request->is_salary ?? 0;
-        $vacancy->salary = $request->salary;
-        $vacancy->is_published = 0;
-        $vacancy->is_active = 1;
-        $vacancy->status = 1; //holati yangi
-        $vacancy->save();
+        $validated_data = $this->validate($request, [
+            'name' => 'required',
+            'specialist_id' => 'required',
+            'skill' => 'required',
+            'salary' => 'nullable',
+            'is_salary' => 'nullable',
+            'desc' => 'required'
+        ]);
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('user_id', $user->id)->first();
+        $validated_data['is_published'] = 0;
+        $validated_data['is_active'] = 1;
+        $validated_data['status'] = 1;
+        $validated_data['salary_hidden'] = $request->is_salary ?? 0;
+        $validated_data['company_inn'] = $company->company_inn;
+        $validated_data['company_id'] = $company->id;
 
-        return redirect()->route('vacancies.index');
+        Vacancy::create($validated_data);
+
+        return redirect()->route('vacancy.index')->with('vacancy_added_successfully', 'Sizning vakantingiz muvaffaqiyatli saqlandi. Vakantingiz moderator tomonidan tasdiqlanganidan keyin saytda ko\'rinadi');
     }
 
     /**
@@ -98,13 +73,9 @@ class VacancyController extends Controller
      * @param  \App\Models\Vacancy  $vacancy
      * @return \Illuminate\Http\Response
      */
-    public function show($vacancy)
+    public function show(Vacancy $vacancy)
     {
-        $vacancy = Vacancy::findOrFail($vacancy);
-
-        return view('vacancies.show', [
-            'vacancy' => $vacancy
-        ]);
+        return view('profile.vacancy', compact('vacancy'));
     }
 
     /**
@@ -115,39 +86,36 @@ class VacancyController extends Controller
      */
     public function edit(Vacancy $vacancy)
     {
-        $user_id = Auth::id();
-        $company = Company::where('user_id', $user_id)->get();
-        $specialists = Specialist::select('id','name')->get();
-        $skills = Skill::select('id','name')->get();
-
-        return view('vacancies.edit', [
-            'vacancy' => $vacancy,
-            'company' => $company,
-            'specialists' => $specialists,
-            'skills' => $skills
-        ]);
+        return view('profile.editvacancy', compact('vacancy'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateVacancyRequest  $request
      * @param  \App\Models\Vacancy  $vacancy
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVacancyRequest $request, Vacancy $vacancy)
+    public function update(Request $request, Vacancy $vacancy)
     {
-        $vacancy->company_inn = $request->company_inn;
-        $vacancy->specialist_id = $request->specialist_id;
-        $vacancy->skill = $request->skill;
-        $vacancy->salary_hidden = $request->is_salary ?? 0;
-        $vacancy->salary = $request->salary;
-        $vacancy->is_published = 0;
-        $vacancy->is_active = 1;
-        $vacancy->status = 1; //holati yangi
-        $vacancy->update();
+        $validated_data = $this->validate($request, [
+            'name' => 'required',
+            'specialist_id' => 'required',
+            'skill' => 'required',
+            'salary' => 'nullable',
+            'is_salary' => 'nullable',
+            'desc' => 'required'
+        ]);
+        $user = User::find(Auth::user()->id);
+        $company = Company::where('user_id', $user->id)->first();
+        $validated_data['is_published'] = 0;
+        $validated_data['is_active'] = 1;
+        $validated_data['status'] = 1;
+        $validated_data['salary_hidden'] = $request->is_salary ?? 0;
+        $validated_data['company_inn'] = $company->company_inn;
+        $validated_data['company_id'] = $company->id;
+        $vacancy->update($validated_data);
 
-        return redirect()->route('vacancies.index');
+        return redirect()->route('vacancy.show', ['vacancy' => $vacancy])->with('saved_successfully', 'Muvaffaqiyatli saqlandi');
     }
 
     /**
@@ -159,7 +127,26 @@ class VacancyController extends Controller
     public function destroy(Vacancy $vacancy)
     {
         $vacancy->delete();
-
-        return redirect()->route('vacancies.index');
+        return redirect()->route('vacancy.index')->with('deleted_successfully', "Muvaffaqiyatli o'chirildi");
     }
+
+    public function vacancies($id = null)
+    {
+        $specialist = null;
+        $condition = [];
+        if ($id) {
+            $condition = ['specialist_id' => $id];
+            $specialist = Specialist::find($id);
+        }
+        $vacancies = Vacancy::active()->where($condition)->orderBy('id', 'desc')->paginate(10);
+        return view('vacancies', compact('vacancies', 'specialist'));
+    }
+
+    public function vacancy_details(Vacancy $vacancy)
+    {
+        $vacancy->view_count = $vacancy->view_count + 1;
+        $vacancy->save();
+        return view('vacancy_details', compact('vacancy'));
+    }
+
 }

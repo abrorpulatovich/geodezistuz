@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Resource;
+use App\Models\ResourceType;
+use App\Models\Rezume;
+use App\Models\Specialist;
+use App\Models\Vacancy;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -23,6 +17,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $rezumes = Rezume::where('is_active', 1)->orderBy('created_at', 'desc')->limit(6)->get();
+        $specialists = Specialist::with('vacancies')->active()->orderBy('s_order')->get();
+        $vacancies_count = Vacancy::active()->count();
+
+        return view('home', compact('specialists', 'rezumes', 'vacancies_count'));
+    }
+
+    public function resources($slug)
+    {
+        $resource_type = ResourceType::where('slug', $slug)->first();
+        $resources = Resource::where('type_id', $resource_type->id)->orderBy('r_order')->paginate(10);
+        return view('resources.index', compact('resources', 'resource_type'));
+    }
+
+    public function resource_details($slug)
+    {
+        $resource = Resource::where('slug', $slug)->first();
+        $resource->clicked_count = $resource->clicked_count + 1;
+        $resource->save();
+
+        return view('resources.details', compact('resource'));
     }
 }

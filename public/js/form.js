@@ -1,77 +1,77 @@
-Inputmask().mask("input");    
-$(document).ready(function(){
+Inputmask().mask("input");
+$(document).ready(function () {
 
-    $('.phone').inputmask({mask:'+\\9\\9\\899 999 99 99'});
+    $('.phone').inputmask({mask: '+\\9\\9\\899 999 99 99'});
+    $('.inn').inputmask({mask: '999999999'});
+    $('#publish_date').inputmask({mask: '99-99-9999'});
 
-    $('.inn').inputmask({mask:'999999999'});
-
-    $('.birth_date').inputmask("datetime",{
-     mask: "1-2-y", 
-     leapday: "-02-29",
-     placeholder: "dd-mm-yyyy",
-     separator: "-", 
-     alias: "dd-mm-yyyy"
+    $('.birth_date').inputmask("datetime", {
+        mask: "1-2-y",
+        leapday: "-02-29",
+        placeholder: "dd-mm-yyyy",
+        separator: "-",
+        alias: "dd-mm-yyyy"
     });
 
-    $('.passport').inputmask({mask:'[AA] 9999999'});
+    $('.passport').inputmask({mask: '[AA] 9999999'});
 });
 
-$(document).ready(function() {
-   $('input[type="radio"]').click(function() {
-      if ($(this).attr('id') == 'company') {
-         $('#emailhide').hide();
-         $('#passport_hide').hide();
-         $('#full_namehide').hide();
-         $('#birthhide').hide();
-         $('#birth_date').attr('required', false);
-         $('#passport').attr('required', false);
+$(document).ready(function () {
+    $('input[type="radio"]').click(function () {
+        if ($(this).attr('id') == 'company') {
+            $('#emailhide').hide();
+            $('#passport_hide').hide();
+            $('#full_namehide').hide();
+            $('#birthhide').hide();
+            $('#birth_date').attr('required', false);
+            $('#passport').attr('required', false);
 
-         $('#comp_nameshow').show();
-         $('#comp_directorshow').show();
-         $('#director_name').attr('required', true);
-         $('#company_name').attr('required', true);
-         $('#comp_innshow').show();
-         $('#company_inn').attr('required', true);
+            $('#comp_nameshow').show();
+            $('#comp_directorshow').show();
+            $('#director_name').attr('required', true);
+            $('#company_name').attr('required', true);
+            $('#comp_innshow').show();
+            $('#company_inn').attr('required', true);
 
-         $('#genderhide').hide();
-         $('#comp_addressshow').show();
+            $('#genderhide').hide();
+            $('#comp_addressshow').show();
 
-         $('#specialisthide').hide();
-         $('#avatarhide').hide();
-         $('#comp_siteshow').show();
-         $('#comp_logoshow').show();
+            $('#specialisthide').hide();
+            $('#avatarhide').hide();
+            $('#comp_siteshow').show();
+            $('#comp_logoshow').show();
 
-         $('#status').val('2');
-         $('#nameregister').text('Korxona ro‘yxatdan o‘tish')
+            $('#status').val('2');
+            $('#nameregister').text('Yuridik shaxs uchun ro‘yxatdan o‘tish')
 
-      } else {
-         $('#emailhide').show();
-         $('#passport_hide').show();
-         $('#birthhide').show();
-         $('#birth_date').attr('required', true);
-         $('#full_namehide').show();
-         $('#name').attr('required', true);
-         $('#passport').attr('required', true);
+        } else {
+            $('#emailhide').show();
+            $('#passport_hide').show();
+            $('#birthhide').show();
+            $('#birth_date').attr('required', true);
+            $('#full_namehide').show();
+            $('#name').attr('required', true);
+            $('#passport').attr('required', true);
 
-         $('#comp_nameshow').hide();
-         $('#comp_directorshow').hide();
-         $('#company_name').attr('required', false);
-         $('#director_name').attr('required', false);
-         $('#comp_innshow').hide();
-         $('#company_inn').attr('required', false);
+            $('#comp_nameshow').hide();
+            $('#comp_directorshow').hide();
+            $('#company_name').attr('required', false);
+            $('#director_name').attr('required', false);
+            $('#comp_innshow').hide();
+            $('#company_inn').attr('required', false);
 
-         $('#genderhide').show();
-         $('#comp_addressshow').hide();
+            $('#genderhide').show();
+            $('#comp_addressshow').hide();
 
-         $('#specialisthide').show();
-         $('#avatarhide').show();
-         $('#comp_siteshow').hide();
-         $('#comp_logoshow').hide();
+            $('#specialisthide').show();
+            $('#avatarhide').show();
+            $('#comp_siteshow').hide();
+            $('#comp_logoshow').hide();
 
-         $('#status').val('1');
-         $('#nameregister').text('Fuqaro ro‘yxatdan o‘tish')         
-      }
-   });
+            $('#status').val('1');
+            $('#nameregister').text('Jismoniy shaxs uchun ro‘yxatdan o‘tish')
+        }
+    });
 });
 
 $('#region_id').on('change', function () {
@@ -88,15 +88,14 @@ $('#region_id').on('change', function () {
 });
 
 $("#salary").inputmask({
-        'radixPoint': ',',
-        'alias': 'numeric',
-        'groupSeparator': ' ',
-        'autoGroup': true,
-        'digits': 0,
-        'placeholder': '',
-        'prefix': '',
-        'min': 0,
-
+    'radixPoint': ',',
+    'alias': 'numeric',
+    'groupSeparator': ' ',
+    'autoGroup': true,
+    'digits': 0,
+    'placeholder': '',
+    'prefix': '',
+    'min': 0
 });
 
 $("#salary").on("blur", function () {
