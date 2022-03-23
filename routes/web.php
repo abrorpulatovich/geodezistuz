@@ -119,4 +119,5 @@ Route::get('/resources/{slug}/details', [HomeController::class, 'resource_detail
 Route::get('/resources/{slug}', [HomeController::class, 'resources'])->name('resources');
 
 Route::resource('vacancy', VacancyController::class);
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 

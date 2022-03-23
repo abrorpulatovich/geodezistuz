@@ -13,11 +13,11 @@
                         <h3>Saytdan qidirish</h3>
                     </div>
                     <div class="job-search-form bg-cyan job-featured-search">
-                        <form>
+                        <form method="get" action="{{ route('search') }}">
                             <div class="row justify-content-center">
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Saytdan qidirish">
+                                        <input class="form-control" name="keyword" type="text" placeholder="Saytdan qidirish..." />
                                     </div>
                                 </div>
 

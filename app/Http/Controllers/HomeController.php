@@ -7,6 +7,7 @@ use App\Models\ResourceType;
 use App\Models\Rezume;
 use App\Models\Specialist;
 use App\Models\Vacancy;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -38,5 +39,10 @@ class HomeController extends Controller
         $resource->save();
 
         return view('resources.details', compact('resource'));
+    }
+
+    public function search(Request $request)
+    {
+        dd('Saytdan qidirish ishlari amalga oshirilmoqda...');
     }
 }
