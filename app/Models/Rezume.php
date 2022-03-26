@@ -26,12 +26,17 @@ class Rezume extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('is_active', 1);
+        return $query->where('is_active', 2);
     }
 
     public function scopeInactive($query)
     {
-        return $query->where('is_active', 0);
+        return $query->where('is_active', 1);
+    }
+
+    public function getStatus()
+    {
+        return $this->is_active == 1? "<span class='badge badge-warning'>Aktiv emas</span>": "<span class='badge badge-success'>Aktiv</span>";
     }
 
     public static function regionName($id)

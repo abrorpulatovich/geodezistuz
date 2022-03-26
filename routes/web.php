@@ -22,6 +22,16 @@ use App\Http\Controllers\RezumeController;
 use App\Http\Controllers\VacancyController;
 use Illuminate\Support\Facades\Route;
 
+
+//Route::get('/configure', function () {
+//    Artisan::call('optimize');
+//    Artisan::call('route:clear');
+//    Artisan::call('cache:clear');
+//    Artisan::call('config:clear');
+//    Artisan::call('config:cache');
+//    Artisan::call('storage:link');
+//});
+
 // -------- Admin Controllers --------
 
 Route::get('/getCities/{region_id}', [App\Http\Controllers\DataController::class, 'getCities'])->name('getCities');
@@ -79,6 +89,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'check-moderator']],
     Route::get('/accept/vacancies', [AcceptController::class, 'vacancies'])->name('admin.acceptable_vacancies');
     Route::get('/accept/vacancy/{vacancy?}', [AcceptController::class, 'vacancy'])->name('admin.acceptable_vacancy');
 
+    Route::get('/acceptrezumes/{rezume?}', [AcceptController::class, 'accept_rezume'])->name('admin.accept_rezume');
+    Route::get('/accept/rezumes', [AcceptController::class, 'rezumes'])->name('admin.acceptable_rezumes');
+    Route::get('/accept/rezume/{rezume?}', [AcceptController::class, 'rezume'])->name('admin.acceptable_rezume');
+
     Route::resources([
         'category' => CategoryController::class,
         'post' => PostController::class,
@@ -120,4 +134,3 @@ Route::get('/resources/{slug}', [HomeController::class, 'resources'])->name('res
 
 Route::resource('vacancy', VacancyController::class);
 Route::get('/search', [HomeController::class, 'search'])->name('search');
-

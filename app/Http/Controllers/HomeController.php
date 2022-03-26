@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $rezumes = Rezume::where('is_active', 1)->orderBy('created_at', 'desc')->limit(6)->get();
+        $rezumes = Rezume::active()->orderBy('created_at', 'desc')->limit(6)->get();
         $specialists = Specialist::with('vacancies')->active()->orderBy('s_order')->get();
         $vacancies_count = Vacancy::active()->count();
 

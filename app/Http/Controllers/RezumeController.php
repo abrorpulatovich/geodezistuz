@@ -188,7 +188,7 @@ class RezumeController extends Controller
 
     public function rezumes()
     {
-        $rezumes = Rezume::where('is_active', 1)->orderBy('created_at', 'desc')->get();
+        $rezumes = Rezume::active()->orderBy('created_at', 'desc')->get();
         return view('rezumes', compact('rezumes'));
     }
 

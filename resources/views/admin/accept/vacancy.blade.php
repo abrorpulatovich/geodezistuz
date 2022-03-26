@@ -11,7 +11,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-6">
-                                <b>{{ __('Tasdiqlanishi kutilayotgan vakantlar') }}</b>
+                                <b>{{ $vacancy->name }}</b>
                             </div>
                             <div class="col-md-6 text-right">
                                 @if($vacancy->is_active == 0)
