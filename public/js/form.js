@@ -19,54 +19,54 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('input[type="radio"]').click(function () {
         if ($(this).attr('id') == 'company') {
-            $('#emailhide').hide();
-            $('#passport_hide').hide();
-            $('#full_namehide').hide();
-            $('#birthhide').hide();
+            $('#emailhide').addClass('hidden');
+            $('#passport_hide').addClass('hidden');
+            $('#full_namehide').addClass('hidden');
+            $('#birthhide').addClass('hidden');
             $('#birth_date').attr('required', false);
             $('#passport').attr('required', false);
 
-            $('#comp_nameshow').show();
-            $('#comp_directorshow').show();
+            $('#comp_nameshow').removeClass('hidden');
+            $('#comp_directorshow').removeClass('hidden');
             $('#director_name').attr('required', true);
             $('#company_name').attr('required', true);
-            $('#comp_innshow').show();
+            $('#comp_innshow').removeClass('hidden');
             $('#company_inn').attr('required', true);
 
-            $('#genderhide').hide();
-            $('#comp_addressshow').show();
+            $('#genderhide').addClass('hidden');
+            $('#comp_addressshow').removeClass('hidden');
 
-            $('#specialisthide').hide();
-            $('#avatarhide').hide();
-            $('#comp_siteshow').show();
-            $('#comp_logoshow').show();
+            $('#specialisthide').addClass('hidden');
+            $('#avatarhide').addClass('hidden');
+            $('#comp_siteshow').removeClass('hidden');
+            $('#comp_logoshow').removeClass('hidden');
 
             $('#status').val('2');
             $('#nameregister').text('Yuridik shaxs uchun ro‘yxatdan o‘tish')
 
         } else {
-            $('#emailhide').show();
-            $('#passport_hide').show();
-            $('#birthhide').show();
+            $('#emailhide').removeClass('hidden');
+            $('#passport_hide').removeClass('hidden');
+            $('#birthhide').removeClass('hidden');
             $('#birth_date').attr('required', true);
-            $('#full_namehide').show();
+            $('#full_namehide').removeClass('hidden');
             $('#name').attr('required', true);
             $('#passport').attr('required', true);
 
-            $('#comp_nameshow').hide();
-            $('#comp_directorshow').hide();
+            $('#comp_nameshow').addClass('hidden');
+            $('#comp_directorshow').addClass('hidden');
             $('#company_name').attr('required', false);
             $('#director_name').attr('required', false);
-            $('#comp_innshow').hide();
+            $('#comp_innshow').addClass('hidden');
             $('#company_inn').attr('required', false);
 
-            $('#genderhide').show();
-            $('#comp_addressshow').hide();
+            $('#genderhide').removeClass('hidden');
+            $('#comp_addressshow').addClass('hidden');
 
-            $('#specialisthide').show();
-            $('#avatarhide').show();
-            $('#comp_siteshow').hide();
-            $('#comp_logoshow').hide();
+            $('#specialisthide').removeClass('hidden');
+            $('#avatarhide').removeClass('hidden');
+            $('#comp_siteshow').addClass('hidden');
+            $('#comp_logoshow').addClass('hidden');
 
             $('#status').val('1');
             $('#nameregister').text('Jismoniy shaxs uchun ro‘yxatdan o‘tish')
@@ -113,11 +113,11 @@ $("#salary").on("blur", function () {
 
 $('.hide_salary').click(function () {
     if ($('.hide_salary').is(':checked')) {
-        $('#salary_hidden').hide();
+        $('#salary_hidden').addClass('hidden');
         $('#salary').attr('required', false).val("");
         $(this).val(1);
     } else {
-        $('#salary_hidden').show();
+        $('#salary_hidden').removeClass('hidden');
         $('#salary').attr('required', true);
         $(this).val(0);
     }
@@ -125,14 +125,14 @@ $('.hide_salary').click(function () {
 
 $('#is_history').click(function () {
     if ($('#is_history').is(':checked')) {
-        $('#hide_history').hide();
+        $('#hide_history').addClass('hidden');
         $('#old_company_name').attr('required', false).val("");
         $('#position_name').attr('required', false).val("");
         $('#from_date').attr('required', false).val("");
         $('#to_date').attr('required', false).val("");
         $(this).val(1);
     } else {
-        $('#hide_history').show();
+        $('#hide_history').removeClass('hidden');
         $('#old_company_name').attr('required', true);
         $('#position_name').attr('required', true);
         $('#from_date').attr('required', true);

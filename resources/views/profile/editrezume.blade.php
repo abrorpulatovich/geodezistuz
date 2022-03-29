@@ -1,6 +1,6 @@
 @extends('layouts.app_template')
 
-@section('title', "Rezume qo'shish")
+@section('title', $rezume->specialist->name)
 
 @section('content')
 
@@ -16,8 +16,9 @@
 
                     @include('admin.includes.errors')
 
-                    <form method="post" action="{{ route('user_post_rezume') }}">
+                    <form method="post" action="{{ route('user_update_rezume', ['rezume' => $rezume]) }}">
                         @csrf
+                        @method('put')
                         <h6>Shaxsiy ma‘lumotlaringiz</h6>
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -54,7 +55,7 @@
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label for="about_me" class="col-form-label text-md">{{ __('Men haqimda') }}</label>
-                                <textarea name="about_me" id="about_me" cols="30" rows="5"></textarea>
+                                <textarea name="about_me" id="about_me" cols="30" rows="5">{{ $rezume->about_me }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -66,56 +67,67 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="col-form-label text-md-end">
-                                    <input type="checkbox" id="is_history" name="is_history" value="0" class="history_hide"><span> {{ __('Mehnat staji mavjud emas') }}</span>
+                                    <input
+                                        type="checkbox"
+                                        id="is_history"
+                                        name="is_history"
+                                        @if($rezume->is_history == 1)? checked @endif
+                                        value="{{ $rezume->is_history }}"
+                                        class="history_hide"><span> {{ __('Mehnat staji mavjud emas') }}</span>
                                 </label>
                             </div>
                         </div>
-                        <div id="hide_history">
+                        <div id="hide_history" class="{{ $rezume->is_history == 1? 'hidden': '' }}">
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <table class="table table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th>{{ __('Korxona nomi') }}</th>
-                                            <th>{{ __('Lavozim') }}</th>
-                                            <th>{{ __('Ishni boshlagan sana') }}</th>
-                                            <th>{{ __('Ishdan bo‘shagan sana') }}</th>
-                                            <th>
-                                                <button type="button" class="btn btn-primary" id="plus_btn"><i class="lni lni-plus"></i></button>
-                                            </th>
-                                        </tr>
+                                            <tr>
+                                                <th>{{ __('Korxona nomi') }}</th>
+                                                <th>{{ __('Lavozim') }}</th>
+                                                <th>{{ __('Ishni boshlagan sana') }}</th>
+                                                <th>{{ __('Ishdan bo‘shagan sana') }}</th>
+                                                <th>
+                                                    <button type="button" class="btn btn-primary" id="plus_btn"><i class="lni lni-plus"></i></button>
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>
-                                                <input id="old_company_name" type="text"
-                                                       class="old_company_name form-control"
-                                                       name="workplaces[0][old_company_name]"
-                                                       value="{{ old('old_company_name') ?? $workbook->old_company_name }}"
-                                                       required="required">
-                                            </td>
-                                            <td>
-                                                <input id="position_name" type="text"
-                                                       class="position_name form-control"
-                                                       name="workplaces[0][position_name]"
-                                                       value="{{ old('position_name') ?? $workbook->position_name }}"
-                                                       required="required">
-                                            </td>
-                                            <td>
-                                                <input id="from_date" type="text"
-                                                       class="birth_date from_date form-control"
-                                                       name="workplaces[0][from_date]"
-                                                       value="{{ old('from_date') ?? $workbook->from_date }}"
-                                                       required="required">
-                                            </td>
-                                            <td>
-                                                <input id="to_date" type="text"
-                                                       class="birth_date to_date form-control"
-                                                       name="workplaces[0][to_date]"
-                                                       value="{{ old('to_date') ?? $workbook->to_date }}"
-                                                       required="required">
-                                            </td>
-                                        </tr>
+                                            @foreach($rezume->workbooks as $key => $workbook)
+                                                <tr>
+                                                    <td>
+                                                        <input id="old_company_name" type="text"
+                                                               class="old_company_name form-control"
+                                                               name="workplaces[{{$key}}][old_company_name]"
+                                                               value="{{ old('old_company_name') ?? $workbook->old_company_name }}"
+                                                               required="required">
+                                                    </td>
+                                                    <td>
+                                                        <input id="position_name" type="text"
+                                                               class="position_name form-control"
+                                                               name="workplaces[{{$key}}][position_name]"
+                                                               value="{{ old('position_name') ?? $workbook->position_name }}"
+                                                               required="required">
+                                                    </td>
+                                                    <td>
+                                                        <input id="from_date" type="text"
+                                                               class="birth_date from_date form-control"
+                                                               name="workplaces[{{$key}}][from_date]"
+                                                               value="{{ old('from_date') ?? $workbook->from_date }}"
+                                                               required="required">
+                                                    </td>
+                                                    <td>
+                                                        <input id="to_date" type="text"
+                                                               class="birth_date to_date form-control"
+                                                               name="workplaces[{{$key}}][to_date]"
+                                                               value="{{ old('to_date') ?? $workbook->to_date }}"
+                                                               required="required">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger" style="margin-left:4px" id="minus_btn"><i class="lni lni-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -129,7 +141,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="name" class="col-form-label text-md">{{ __('Rezume nomlanishi') }}</label>
-                                <input type="text" name="name" value="{{ old('name') }}" class="form-control"/>
+                                <input type="text" name="name" value="{{ $rezume->name }}" class="form-control"/>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -138,7 +150,7 @@
                                 <select name="specialist_id" required id="specialist_id" class="form-control">
                                     <option value="">Mutaxassislikni tanlang...</option>
                                     @foreach($specialists as $specialist)
-                                        <option value="{{ $specialist->id }}" data-id="{{ $specialist->id }}">{{ $specialist->name }}</option>
+                                        <option value="{{ $specialist->id }}" @if($rezume->specialist_id == $specialist->id) selected @endif data-id="{{ $specialist->id }}">{{ $specialist->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -147,7 +159,7 @@
                                 <select name="skill" required id="skill" class="form-control">
                                     <option value="">Mehnat stajini tanlang...</option>
                                     @foreach($skills as $skill)
-                                        <option value="{{ $skill->id }}" data-id="{{ $skill->id }}">{{ $skill->name }}</option>
+                                        <option value="{{ $skill->id }}" @if($rezume->skill == $skill->id) selected @endif data-id="{{ $skill->id }}">{{ $skill->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

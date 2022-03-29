@@ -34,7 +34,7 @@ class ProfileController extends Controller
         $workbook = new Workbook();
 
         $citizen = Citizen::where('user_id', $user->id)->first();
-        $skills = Skill::select('id','name')->get();
+        $skills = Skill::select('id', 'name')->get();
 
         return view('profile.addrezume', [
             'rezume' => $rezume,
@@ -46,7 +46,15 @@ class ProfileController extends Controller
 
     public function postrezume(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required',
+            'specialist_id' => 'required',
+            'skill' => 'required',
+            'about_me' => 'required'
+        ]);
+
         $rezume = new Rezume();
+        $rezume->name = $request->name;
         $rezume->passport = $request->passport;
         $rezume->specialist_id = $request->specialist_id;
         $rezume->skill = $request->skill;
@@ -60,8 +68,7 @@ class ProfileController extends Controller
         $rezume->status = 1; //holati yangi
         $rezume->save();
 
-        if(!$request->is_history)
-        {
+        if (!$request->is_history) {
             $workplaces = $request->input('workplaces');
 
             foreach ($workplaces as $workplace) {
@@ -81,9 +88,80 @@ class ProfileController extends Controller
         return redirect()->route('user_profile')->with('rezume_added_successfully', 'Sizning rezumingiz muvaffaqiyatli saqlandi');
     }
 
-    public function deleterezume()
+    public function editrezume(Rezume $rezume)
     {
+        $user = User::find(Auth::user()->id);
+        if ($user->can_login != 1) {
+            return redirect()->home();
+        }
 
+        $citizen = Citizen::where('user_id', $user->id)->first();
+
+        return view('profile.editrezume', [
+            'rezume' => $rezume,
+            'citizen' => $citizen
+        ]);
+    }
+
+    public function updaterezume(Request $request, Rezume $rezume)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'specialist_id' => 'required',
+            'skill' => 'required',
+            'about_me' => 'required'
+        ]);
+        $rezume->name = $request->name;
+        $rezume->passport = $request->passport;
+        $rezume->specialist_id = $request->specialist_id;
+        $rezume->skill = $request->skill;
+        $rezume->salary_hidden = $request->is_salary ?? 0;
+        $rezume->is_history = $request->is_history ?? 0;
+        $rezume->salary = $request->salary;
+        $rezume->about_me = $request->about_me;
+        $rezume->is_published = 0;
+        $rezume->is_active = $rezume->is_active != 1? $rezume->is_active: 1;
+        $rezume->user_id = Auth::user()->id;
+        $rezume->status = $rezume->status != 1? $rezume->status: 1;
+        $rezume->save();
+
+        if (!$request->is_history) {
+            $rezume->workbooks()->delete();
+            $workplaces = $request->input('workplaces');
+
+            foreach ($workplaces as $workplace) {
+
+                $workbook = new Workbook();
+
+                $workbook->rezume_id = $rezume->id;
+                $workbook->old_company_name = $workplace['old_company_name'];
+                $workbook->position_name = $workplace['position_name'];
+                $workbook->from_date = $workplace['from_date'];
+                $workbook->to_date = $workplace['to_date'];
+
+                $workbook->save();
+            }
+        } else {
+            $rezume->workbooks()->delete();
+        }
+
+        return redirect()->route('user_profile')->with('rezume_added_successfully', 'Sizning rezumingiz muvaffaqiyatli saqlandi');
+    }
+
+    public function deleterezume(Request $request)
+    {
+        $rezume = Rezume::findOrFail($request->rezume_id);
+
+        if ($request->method() == 'DELETE') {
+            if ($rezume && $rezume->user_id == Auth::user()->id) {
+                $rezume->delete();
+                return redirect()->route('user_profile')->with('rezume_deleted_successfully', "Rezume muvaffaqaiyatli o'chirildi");
+            } else {
+                return redirect()->route('user_profile')->with('not_personal_rezume', "Shaxsiy bo'lmagan rezumeni o'chirish mumkin emas");
+            }
+        } else {
+            return redirect()->route('user_profile')->with('error_occurred', "Xatolik sodir bo'ldi");
+        }
     }
 
     public function company()

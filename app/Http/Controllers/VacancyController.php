@@ -56,7 +56,7 @@ class VacancyController extends Controller
         $user = User::find(Auth::user()->id);
         $company = Company::where('user_id', $user->id)->first();
         $validated_data['is_published'] = 0;
-        $validated_data['is_active'] = 1;
+        $validated_data['is_active'] = 0;
         $validated_data['status'] = 1;
         $validated_data['salary_hidden'] = $request->is_salary ?? 0;
         $validated_data['company_inn'] = $company->company_inn;
@@ -70,7 +70,7 @@ class VacancyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Vacancy  $vacancy
+     * @param \App\Models\Vacancy $vacancy
      * @return \Illuminate\Http\Response
      */
     public function show(Vacancy $vacancy)
@@ -81,7 +81,7 @@ class VacancyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Vacancy  $vacancy
+     * @param \App\Models\Vacancy $vacancy
      * @return \Illuminate\Http\Response
      */
     public function edit(Vacancy $vacancy)
@@ -92,7 +92,7 @@ class VacancyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Models\Vacancy  $vacancy
+     * @param \App\Models\Vacancy $vacancy
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Vacancy $vacancy)
@@ -108,7 +108,7 @@ class VacancyController extends Controller
         $user = User::find(Auth::user()->id);
         $company = Company::where('user_id', $user->id)->first();
         $validated_data['is_published'] = 0;
-        $validated_data['is_active'] = 1;
+        $validated_data['is_active'] = $vacancy->is_active == 1? 1: 0;
         $validated_data['status'] = 1;
         $validated_data['salary_hidden'] = $request->is_salary ?? 0;
         $validated_data['company_inn'] = $company->company_inn;
@@ -121,7 +121,7 @@ class VacancyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vacancy  $vacancy
+     * @param \App\Models\Vacancy $vacancy
      * @return \Illuminate\Http\Response
      */
     public function destroy(Vacancy $vacancy)

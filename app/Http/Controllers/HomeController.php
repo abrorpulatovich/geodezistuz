@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Resource;
 use App\Models\ResourceType;
 use App\Models\Rezume;
@@ -43,6 +44,71 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        dd('Saytdan qidirish ishlari amalga oshirilmoqda...');
+        $keyword = $request->keyword;
+        $result = $this->main_search($keyword);
+        return view('search_result', compact('result', 'keyword'));
+    }
+
+    public function search_by_keyword(Request $request)
+    {
+        $result = $this->main_search($request->keyword);
+        return response()->json($result);
+    }
+
+    private function main_search($keyword)
+    {
+        $result = [
+            'success' => false,
+            'message' => "Ma'lumot topilmadi"
+        ];
+        $result_data = [];
+        $vacancies = Vacancy::active()->where('name', 'like', "%{$keyword}%")->orWhere('desc', 'like', "%{$keyword}%")->get();
+
+        if ($vacancies) {
+            foreach ($vacancies as $vacancy) {
+                $result_data[] = [
+                    'result' => $vacancy['name'],
+                    'id' => $vacancy['id'],
+                    'key' => 'Vakant'
+                ];
+            }
+        }
+
+        $rezumes = Rezume::active()->where('about_me', 'like', "%{$keyword}%")->orWhere('name', 'like', "%{$keyword}%")->get();
+
+        if ($rezumes) {
+            foreach ($rezumes as $rezume) {
+                $result_data[] = [
+                    'result' => $rezume->name,
+                    'id' => $rezume['id'],
+                    'key' => 'Rezume'
+                ];
+            }
+        }
+
+        $posts = Post::active()
+            ->where('title', 'like', "%{$keyword}%")
+            ->orWhere('short_desc', 'like', "%{$keyword}%")
+            ->orWhere('desc', 'like', "%{$keyword}%")
+            ->get();
+
+        if ($posts) {
+            foreach ($posts as $post) {
+                $result_data[] = [
+                    'result' => $post->title,
+                    'slug' => $post['slug'],
+                    'key' => 'Yangilik'
+                ];
+            }
+        }
+
+        if (sizeof($result_data) > 0) {
+            $result = [
+                'success' => true,
+                'message' => "Ma'lumotlar topildi",
+                'result_data' => $result_data
+            ];
+        }
+        return $result;
     }
 }

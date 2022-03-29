@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 
 </head>
 <body>

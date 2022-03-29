@@ -21,6 +21,8 @@ class Rezume extends Model
         'status',
         'salary_hidden',
         'about_me',
+        'name',
+        'still_working',
         'is_history'
     ];
 
@@ -71,11 +73,11 @@ class Rezume extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return date('d-m-Y H:i:s', strtotime($value));
+        return date('d.m.Y H:i:s', strtotime($value));
     }
 
     public function getUpdatedAtAttribute($value)
     {
-        return date('d-m-Y H:i:s', strtotime($value));
+        return date('d.m.Y H:i:s', strtotime($value));
     }
 }

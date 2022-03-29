@@ -22,7 +22,7 @@
 						<table class="table table-bordered">
 							<tr>
 								<td>Vakansiya bergan tashkilot</td>
-								<td>{{ $vacancy::company($vacancy->company_inn)->company_name }}</td>
+								<td>{{ $vacancy->company->company_name }}</td>
 							</tr>
 							<tr>
 								<td>Vakansiya bergan tashkilot INN si</td>
@@ -30,25 +30,25 @@
 							</tr>
 							<tr>
 								<td>F.I.O</td>
-								<td>{{ $vacancy::company($vacancy->company_inn)->full_name }}</td>
+								<td>{{ $vacancy->company->full_name }}</td>
 							</tr>
 							<tr>
 								<td>Tashkilot telefon raqami</td>
-								<td>{{ $vacancy::company($vacancy->company_inn)->company_phone_number }}</td>
+								<td>{{ $vacancy->company->company_phone_number }}</td>
 							</tr>
 							<tr>
 								<td>Mavjud vakansiya</td>
-								<td>{{ $vacancy::specialist($vacancy->specialist_id)->name }}</td>
+								<td>{{ $vacancy->specialist->name }}</td>
 							</tr>
 							<tr>
 								<td>Talab qilingan mehnat staji</td>
-								<td>{{ $vacancy::skill($vacancy->skill)->name }}</td>
+								<td>{{ $vacancy->vskill->name }}</td>
 							</tr>
 							<tr>
 								<td>Taklif etilgan oylik</td>
 								<td>
 									@if($vacancy->salary_hidden)
-                                        Ko‘rsatilmagan 
+                                        Ko‘rsatilmagan
                                     @else
                                         {{ $vacancy->salary }} so‘m
                                     @endif
@@ -58,7 +58,7 @@
 								<td>Holati</td>
 								<td>
 									@if($vacancy->status == 1)
-                                        Korilmagan 
+                                        Korilmagan
                                     @elseif($vacancy->status == 2)
                                         Korilgan
                                     @endif
@@ -68,7 +68,7 @@
 								<td>Holati</td>
 								<td>
 									@if($vacancy->is_published == 0)
-                                        Tasdiqlanmagan 
+                                        Tasdiqlanmagan
                                     @elseif($vacancy->is_published == 1)
                                         Tasdiqlangan
                                     @endif
@@ -96,7 +96,7 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
 
 

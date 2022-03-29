@@ -3,7 +3,11 @@
 @section('title', 'Bosh sahifa')
 
 @section('content')
-
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
     <!-- Page Header Start -->
     <div class="page-header">
         <div class="container">
@@ -17,7 +21,14 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="form-group">
-                                        <input class="form-control" name="keyword" type="text" placeholder="Saytdan qidirish..." />
+                                        <input class="form-control" name="keyword" id="keyword" type="text" placeholder="Saytdan qidirish..." />
+                                        <div class="container">
+                                            <br>
+                                            <div class="row hidden" id="search_result_box">
+                                                <div class="col-md-12" style="max-height: 300px; overflow: scroll;" id="search_res"></div>
+                                            </div>
+                                            <br>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -32,6 +43,7 @@
         </div>
     </div>
     <!-- Page Header End -->
+
 
     @if(sizeof($specialists) > 0)
         <!-- Category Section Start -->
@@ -98,7 +110,7 @@
                                     <img src="/assets/img/features/img2.png" alt="">
                                 </div>
                                 <div class="content">
-                                    <h3><a href="{{ route('rezume_details', ['rezume' => $rezume]) }}">{{ $rezume->specialist->name }}</a></h3>
+                                    <h3><a href="{{ route('rezume_details', ['rezume' => $rezume]) }}">{{ $rezume->name }}</a></h3>
                                     <p class="brand">{{ $rezume->user->citizen->full_name }}</p>
                                     <div class="tags">
                                         <span><i class="lni-map-marker"></i> {{ $rezume->user->citizen->region->name_uz }}, {{ $rezume->user->citizen->city->name_uz }}</span>
@@ -150,4 +162,57 @@
         </section>
         <!-- blog Section End -->
     @endif
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script>
+
+        var keyword = $('#keyword').val();
+        if (keyword.length === 0) {
+            $('#search_result_box').addClass('hidden');
+            $('#search_res').html('');
+        }
+
+        $('#keyword').on('keyup', function () {
+            var keyword = $(this).val();
+
+            if (keyword.length >= 3) {
+                $.ajax({
+                    type: 'GET',
+                    url: "{{ route('search_by_keyword') }}",
+                    data: {keyword: keyword},
+                    success: function (data) {
+                        if(data.success === false) {
+                            var response = "<div class='alert alert-warning'><i class='lni lni-warning'></i>" + data.message + "</div>";
+                        } else {
+                            var result_html = '<ul class="list-group">';
+                            data.result_data.forEach((item, index) => {
+                                result_html += '<li class="list-group-item d-flex justify-content-between align-items-center">';
+                                if (item.key === 'Vakant') {
+                                    var link = "/vacancy/" + item.id + "/details";
+                                    result_html += "<a href='"+ link + "'>" + item.result + "</a>";
+                                } else if (item.key === 'Rezume') {
+                                    var link = "/rezumes/" + item.id + "/details";
+                                    result_html += "<a href='"+ link + "'>" + item.result + "</a>";
+                                } else if (item.key === 'Yangilik') {
+                                    var link = "/news/" + item.slug + "/details";
+                                    result_html += "<a href='"+ link + "'>" + item.result + "</a>";
+                                }
+                                result_html += '<span class="badge badge-primary badge-pill">';
+                                result_html += item.key;
+                                result_html += '</span>';
+                                result_html += '</li>';
+                            });
+                            result_html += '</ul>';
+                            response = result_html;
+                        }
+                        $('#search_result_box').removeClass('hidden');
+                        $('#search_res').html(response);
+                    }
+                });
+            } else if(keyword.length == 0) {
+                $('#search_result_box').addClass('hidden');
+                $('#search_res').html('');
+            }
+        });
+    </script>
 @endsection

@@ -12,7 +12,7 @@
                         <span class="lni-menu"></span>
                         <span class="lni-menu"></span>
                     </button>
-                    <a href="{{ route('home') }}" class="navbar-brand"><img src="assets/img/logo3.png" alt=""></a>
+                    <a href="{{ route('home') }}" class="navbar-brand"><img src="/assets/img/logo3.png" alt=""></a>
                 </div>
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="navbar-nav mr-auto w-100 justify-content-end">
@@ -86,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-menu" data-logo="assets/img/logo3.png"></div>
+        <div class="mobile-menu" data-logo="/assets/img/logo3.png"></div>
     </nav>
     <!-- Navbar End -->
 </header>

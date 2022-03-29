@@ -34,7 +34,7 @@
                                         <div class="manager-info">
                                             <div class="manager-name">
                                                 <h4><a href="{{ route('rezume_details', ['rezume' => $rezume]) }}">{{ $rezume->user->citizen->full_name }}</a></h4>
-                                                <h4>{{ $rezume->specialist->name }}</h4>
+                                                <h4>{{ $rezume->name }}</h4>
                                             </div>
                                             <div class="manager-meta">
                                                 <span class="location"><i class="lni-map-marker"></i> {{ $rezume->user->citizen->region->name_uz }}, {{ $rezume->user->citizen->city->name_uz }}</span>

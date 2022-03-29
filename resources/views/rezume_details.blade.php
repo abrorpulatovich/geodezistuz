@@ -55,7 +55,7 @@
 {{--                                </div>--}}
 {{--                            </div>--}}
                             <h3>{{ $rezume->user->citizen->full_name }}</h3>
-                            <h6><b>{{ $rezume->specialist->name }}</b></h6>
+                            <h6><b>{{ $rezume->name }}</b></h6>
                             <p><span class="address"><i class="lni-map-marker"></i>{{ $rezume->user->citizen->region->name_uz }}, {{ $rezume->user->citizen->city->name_uz }}</span>
                                 <br> <span><i class="lni lni-phone"></i> {{ $rezume->user->citizen->phone_number }}</span></p>
 {{--                            <div class="social-link">--}}
@@ -75,13 +75,17 @@
                                 @foreach($rezume->workbooks as $workbook)
                                     <h4>{{ $workbook->position_name }}</h4>
                                     <h5>{{ $workbook->old_company_name }}</h5>
-                                    <span class="date"><i class="lni lni-calendar"></i> {{ date('d-m-Y', strtotime($workbook->from_date)) }} - {{ date('d-m-Y', strtotime($workbook->to_date)) }}</span>
+                                    <span class="date"><i class="lni lni-calendar"></i> {{ date('d.m.Y', strtotime($workbook->from_date)) }} - {{ date('d.m.Y', strtotime($workbook->to_date)) }}</span>
 {{--                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero vero, dolores, officia quibusdam architecto sapiente eos voluptas odit ab veniam porro quae possimus itaque, quas! Tempora sequi nobis, atque incidunt!</p>--}}
                                     <br>
                                 @endforeach
                             @else
                                 <div class="alert alert-warning"><i class="lni lni-warning"></i> Ish tajribasi mavjud emas</div>
                             @endif
+                        </div>
+                        <div class="item">
+                            <h3>So'ralayotgan maosh</h3>
+                            <span class="text-success">{!! $rezume->salary_hidden == 0? $rezume->salary . " so'm": "<span class='text-info'>Kelishilgan holda</span>" !!}</span>
                         </div>
 {{--                        <div class="education item">--}}
 {{--                            <h3>Education</h3>--}}

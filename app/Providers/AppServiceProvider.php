@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with(['latest_news' => $this->latest_news]);
         });
 
-        view()->composer(['rezumes.create', 'profile.addvacancy', 'profile.editvacancy', 'auth.register', 'profile.addrezume'], function($view) {
+        view()->composer(['rezumes.create', 'profile.addvacancy', 'profile.editvacancy', 'auth.register', 'profile.addrezume', 'profile.editrezume'], function($view) {
             $specialists = Specialist::active()->orderBy('s_order')->get();
             $skills = Skill::select('id','name')->get();
             $this->specialists = $specialists;

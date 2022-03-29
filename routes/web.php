@@ -126,11 +126,15 @@ Route::get('/users/profile/rezumes', [ProfileController::class, 'user'])->name('
 
 Route::get('/users/profile/rezumes', [ProfileController::class, 'user'])->name('user_profile');
 Route::get('/users/profile/addrezume', [ProfileController::class, 'addrezume'])->name('user_add_rezume');
+Route::get('/users/{rezume}/editrezume', [ProfileController::class, 'editrezume'])->name('user_edit_rezume');
 Route::post('/users/postrezume/profile', [ProfileController::class, 'postrezume'])->name('user_post_rezume');
-Route::delete('/users/deleterezume/profile', [ProfileController::class, 'deleterezume'])->name('user_delete_rezume');
+Route::put('/users/updaterezume/{rezume}/profile', [ProfileController::class, 'updaterezume'])->name('user_update_rezume');
+Route::delete('/users/deleterezume', [ProfileController::class, 'deleterezume'])->name('user_delete_rezume');
 
 Route::get('/resources/{slug}/details', [HomeController::class, 'resource_details'])->name('resource_details');
 Route::get('/resources/{slug}', [HomeController::class, 'resources'])->name('resources');
 
 Route::resource('vacancy', VacancyController::class);
+
+Route::get('/search/keyword', [HomeController::class, 'search_by_keyword'])->name('search_by_keyword');
 Route::get('/search', [HomeController::class, 'search'])->name('search');

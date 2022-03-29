@@ -34,11 +34,11 @@
                         </tr>
                         <tr>
                             <th><b>Mutaxassislik</b></th>
-                            <td>{{ $vacancy::specialist($vacancy->specialist_id)->name }}</td>
+                            <td>{{ $vacancy->specialist->name }}</td>
                         </tr>
                         <tr>
                             <th><b>Mehnat stajini tanlang</b></th>
-                            <td>{{ $vacancy::skill($vacancy->skill)->name }}</td>
+                            <td>{{ $vacancy->vskill->name }}</td>
                         </tr>
                         <tr>
                             <th><b>Vakant haqida (To'liq matn)</b></th>
